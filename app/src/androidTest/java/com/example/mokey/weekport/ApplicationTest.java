@@ -29,7 +29,8 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
         try {
             Field field = testClassClass.getDeclaredField("tasks");
             ParameterizedType type = (ParameterizedType) field.getGenericType();
-            System.out.println(type);
+            Class aClass = (Class) type.getActualTypeArguments()[0];
+            System.out.println(aClass);
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
