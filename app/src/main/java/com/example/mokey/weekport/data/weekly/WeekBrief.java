@@ -15,10 +15,8 @@ import com.example.mokey.weekport.data.XmlRootName;
  */
 @XmlRootName(rootName = "week-brief")
 public class WeekBrief implements Parcelable {
-    @XmlFieldName(fieldName = "week-summary")
-    private String weekSummary;//本周总结
-    @XmlFieldName(fieldName = "next-plan")
-    private String nextPlan;//下周计划
+    @XmlFieldName(fieldName = "week-summary") private String weekSummary;//本周总结
+    @XmlFieldName(fieldName = "next-plan") private String nextPlan;//下周计划
 
     public String getWeekSummary() {
         return weekSummary;

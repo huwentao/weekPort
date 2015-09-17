@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/navigation_drawer"
+            android:name="com.example.mokey.weekport.ui.NavigationDrawerFragment"
+            android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            tools:layout="@layout/fragment_navigation_drawer"/>
+
+        <android.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent"/>
+
+        <fragment
+            android:id="@+id/contentListPanel"
+            android:name="com.example.mokey.weekport.ui.ContentListFragment"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            tools:layout="@layout/fragment_navigation_drawer"/>
+
+        <android.widget.Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent"/>
+
+        <fragment
+            android:id="@+id/contentPanel"
+            android:name="com.example.mokey.weekport.ui.NavigationDrawerFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            tools:layout="@layout/fragment_navigation_drawer"/>
+    </LinearLayout>
+</LinearLayout>

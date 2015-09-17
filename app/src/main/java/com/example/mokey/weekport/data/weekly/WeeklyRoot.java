@@ -15,21 +15,14 @@ import java.util.List;
  */
 @XmlRootName(rootName = "root")
 public class WeeklyRoot implements Parcelable {
-    @XmlFieldName(fieldName = "doc-type", value = "week-report")
-    private String docType;
-    @XmlFieldName(fieldName = " doc-version", value = "1.0")
-    private String docVersion;
-    @XmlFieldName(fieldName = "report-person")
-    private String reportPerson;//名字
-    @XmlFieldName(fieldName = "id-no")
-    private String idNo;//身份证号码
-    @XmlFieldName(fieldName = "report-year")
-    private String reportYear;//当前年份
-    @XmlFieldName(fieldName = "report-week")
-    private String reportWeek;//本年第几周周数
-    @XmlFieldName(fieldName = "task-list", type = FieldType.ListType)
-    private List<Task> taskList;
-    @XmlFieldName(type = FieldType.WeeklyRootType)
+    @XmlFieldName(fieldName = "doc-type", value = "week-report") private String docType;
+    @XmlFieldName(fieldName = "doc-version", value = "1.0") private String docVersion;
+    @XmlFieldName(fieldName = "report-person") private String reportPerson;//名字
+    @XmlFieldName(fieldName = "id-no") private String idNo;//身份证号码
+    @XmlFieldName(fieldName = "report-year") private String reportYear;//当前年份
+    @XmlFieldName(fieldName = "report-week") private String reportWeek;//本年第几周周数
+    @XmlFieldName(fieldName = "task-list", type = FieldType.ListType) private List<Task> taskList;
+    @XmlFieldName(fieldName = "week-brief", type = FieldType.WeekBriefType)
     private WeekBrief weekBrief;//周报总结
 
     public String getDocType() {

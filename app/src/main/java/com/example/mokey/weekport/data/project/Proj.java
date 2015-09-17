@@ -13,15 +13,15 @@ import com.example.mokey.weekport.data.XmlRootName;
 /**
  * Created by mokey on 15-9-6.
  */
-@XmlRootName(rootName = "root")
+@XmlRootName(rootName = "proj")
 public class Proj implements Parcelable {
     @XmlFieldName(fieldName = "proj-id") private String projId;//
     @XmlFieldName(fieldName = "proj-name") private String projName;//中国银行卡部APPS开发中银开放平台
-    @XmlFieldName(fieldName = "proj-name") private String startDate;//
-    @XmlFieldName(fieldName = "start-date") private String startTime;//
-    @XmlFieldName(fieldName = "start-time") private String projType;//
-    @XmlFieldName(fieldName = "proj-type") private String luodiFlag;//
-    @XmlFieldName(fieldName = "luodi-flag") private String workType;//
+    @XmlFieldName(fieldName = "start-date") private String startDate;//
+    @XmlFieldName(fieldName = "start-time") private String startTime;//
+    @XmlFieldName(fieldName = "proj-type") private String projType;//
+    @XmlFieldName(fieldName = "luodi-flag") private String luodiFlag;//
+    @XmlFieldName(fieldName = "work-type") private String workType;//
 
     public String getProjId() {
         return projId;
