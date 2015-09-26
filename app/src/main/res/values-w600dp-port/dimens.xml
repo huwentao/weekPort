@@ -12,4 +12,6 @@
     <dimen name="dimen_text_padding">12dip</dimen>
     <dimen name="dimen_drawpadding">3dp</dimen>
     <dimen name="dimen_button_radius">5dp</dimen>
+    <dimen name="dimen_elevation_min">3dp</dimen>
+    <dimen name="dimen_elevation">6dp</dimen>
 </resources>

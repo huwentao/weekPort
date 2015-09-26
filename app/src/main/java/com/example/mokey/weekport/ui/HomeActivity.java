@@ -35,7 +35,7 @@ public class HomeActivity extends BaseActivity
     private boolean isHaveOne = false;
 
     private WeekPortFragment mWeekPortFragment;//
-    private WeekPortListFragment weekPortListFragment;//
+    private WeekPortListFragment mWeekPortListFragment;//
     private PersonFragment mPersonFragment;//
     private RequirementFragment mRequirementFragment;//
     private ProjectFragment mProjectFragment;//
@@ -67,6 +67,8 @@ public class HomeActivity extends BaseActivity
         isHaveTwo = getResources().getBoolean(R.bool.isHaveTwoPanel);
         isHaveThree = getResources().getBoolean(R.bool.isHaveThreePanel);
 
+        mWeekPortListFragment = getBaseFragment(WeekPortListFragment.class);
+        showFragment(mWeekPortListFragment.getPrivateTag());
     }
 
     @Override public void initToolBar() {
@@ -79,8 +81,8 @@ public class HomeActivity extends BaseActivity
         // update the main content by replacing fragments
         switch (itemId) {
             case R.id.myWeekPort:
-                weekPortListFragment = getBaseFragment(WeekPortListFragment.class);
-                showFragment(weekPortListFragment.getPrivateTag());
+                mWeekPortListFragment = getBaseFragment(WeekPortListFragment.class);
+                showFragment(mWeekPortListFragment.getPrivateTag());
                 break;
             case R.id.person:
                 mPersonFragment = getBaseFragment(PersonFragment.class);
@@ -123,13 +125,13 @@ public class HomeActivity extends BaseActivity
     public <T> T getBaseFragment(Class<T> aClass) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         if (aClass.isAssignableFrom(WeekPortListFragment.class)) {
-            if (weekPortListFragment == null) {
-                weekPortListFragment = WeekPortListFragment.newInstance(null, null);
-                baseFragments.put(weekPortListFragment.getPrivateTag(), weekPortListFragment);
+            if (mWeekPortListFragment == null) {
+                mWeekPortListFragment = WeekPortListFragment.newInstance(null, null);
+                baseFragments.put(mWeekPortListFragment.getPrivateTag(), mWeekPortListFragment);
             }
-            transaction.add(R.id.contentContainer, weekPortListFragment, weekPortListFragment.getPrivateTag());
+            transaction.add(R.id.contentContainer, mWeekPortListFragment, mWeekPortListFragment.getPrivateTag());
             transaction.commit();
-            return aClass.cast(weekPortListFragment);
+            return aClass.cast(mWeekPortListFragment);
         } else if (aClass.isAssignableFrom(PersonFragment.class)) {
             if (mPersonFragment == null) {
                 mPersonFragment = PersonFragment.newInstance(null, null);

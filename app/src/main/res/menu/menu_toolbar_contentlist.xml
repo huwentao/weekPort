@@ -4,14 +4,14 @@
     <group>
         <item
             android:id="@+id/menu"
-            android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+            android:icon="@drawable/ic_action_more"
             android:title="@string/menu"
             app:showAsAction="always">
             <menu>
                 <item
                     android:id="@+id/add"
-                    android:icon="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
-                    android:title="@string/plus"
+                    android:icon="@drawable/arrows_circle_plus"
+                    android:title="@string/addTask"
                     app:showAsAction="always"/>
             </menu>
         </item>

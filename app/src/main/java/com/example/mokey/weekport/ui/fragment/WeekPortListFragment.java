@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mokey.weekport.R;
+import com.example.mokey.weekport.ui.adapter.WeekPortListAdapter;
 import com.example.mokey.weekport.ui.core.BaseFragment;
 
 import butterknife.Bind;
@@ -28,6 +29,7 @@ public class WeekPortListFragment extends BaseFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private WeekPortListAdapter mWeekPortListAdapter;
 
     /**
      * Use this factory method to create a new instance of
@@ -75,6 +77,7 @@ public class WeekPortListFragment extends BaseFragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-
+        mWeekPortListAdapter = new WeekPortListAdapter();
+        recyclerView.setAdapter(mWeekPortListAdapter);
     }
 }

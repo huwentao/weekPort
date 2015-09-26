@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * Created by mokey on 15-9-23.
  */
-public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class WeekPortListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<Task> mTaskList = new ArrayList<>();
 
@@ -29,14 +29,14 @@ public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ITEM_TYPE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.layout_content_list_item,
+                    R.layout.layout_weekport_list_item,
                     parent,
                     false
             );
-            return new ContentView(view);
+            return new WeekPortItem(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.layout_content_list_plus_item,
+                    R.layout.layout_weekprot_list_plus_item,
                     parent,
                     false
             );
@@ -46,9 +46,9 @@ public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == ITEM_TYPE) {
-            ContentView contentView = (ContentView) holder;
-            contentView.toolbar.inflateMenu(R.menu.menu_toolbar_contentlist);
-            contentView.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            WeekPortItem weekPortItem = (WeekPortItem) holder;
+            weekPortItem.toolbar.inflateMenu(R.menu.menu_toolbar_contentlist);
+            weekPortItem.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
                 @Override public boolean onMenuItemClick(MenuItem item) {
                     return false;
                 }
@@ -57,7 +57,7 @@ public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override public int getItemCount() {
-        return 0;
+        return mTaskList.size() + 1;
     }
 
     public final static int ITEM_TYPE = 1;
@@ -68,7 +68,7 @@ public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      * @return
      */
     @Override public int getItemViewType(int position) {
-        if (position == getItemCount()) {
+        if (position == getItemCount() - 1) {
             return PLUS_TYPE;
         } else {
             return ITEM_TYPE;
@@ -78,10 +78,10 @@ public class ContentListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     /**
      * 内容
      */
-    class ContentView extends RecyclerView.ViewHolder {
+    class WeekPortItem extends RecyclerView.ViewHolder {
         @Bind(R.id.toolBar) Toolbar toolbar;
 
-        public ContentView(View itemView) {
+        public WeekPortItem(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
