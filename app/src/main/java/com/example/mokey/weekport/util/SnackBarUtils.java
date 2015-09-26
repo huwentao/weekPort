@@ -4,7 +4,7 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 
-import www.ht.com.app.R;
+import com.example.mokey.weekport.R;
 
 /**
  * 创建SnackBar，设置显示的文本颜色
@@ -23,7 +23,7 @@ public class SnackBarUtils {
         View snackbarLayout = snackbar.getView();
         TextView mMessageView = (TextView) snackbarLayout.findViewById(android.support.design.R.id.snackbar_text);
         TextView mActionView = (TextView) snackbarLayout.findViewById(android.support.design.R.id.snackbar_action);
-        mActionView.setTextColor(view.getResources().getColor(R.color.colorAccentYellow));
+        mActionView.setTextColor(view.getResources().getColor(R.color.colorAccent));
         mMessageView.setTextColor(view.getResources().getColor(R.color.textColorWhite));
         return snackbar;
     }

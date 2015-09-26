@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="activity_home" type="layout">@layout/activity_home_twopanel</item>
+    <item name="activity_home" type="layout">@layout/layout_activity_home_twopanel</item>
     <bool name="isHaveTwoPanel">true</bool>
 </resources>

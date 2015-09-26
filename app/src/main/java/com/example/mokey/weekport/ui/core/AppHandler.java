@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference;
 public abstract class AppHandler {
     private StaticHandler handler;
 
-    public Handler getHandler(BaseActivity baseActivity) {
+    public StaticHandler getHandler(BaseActivity baseActivity) {
         handler = new StaticHandler(this, baseActivity);
         return handler;
     }

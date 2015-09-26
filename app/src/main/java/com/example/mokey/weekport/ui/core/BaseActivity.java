@@ -13,8 +13,12 @@ import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 
+import com.example.mokey.weekport.R;
 import com.example.mokey.weekport.db.DbUtils;
 import com.example.mokey.weekport.util.DisplayUtil;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import butterknife.ButterKnife;
 
@@ -23,12 +27,14 @@ public class BaseActivity extends AppCompatActivity {
     private boolean isOpenFlingClose = true; // activity右滑关闭功能开关
     private float flingWidthPX = 0f;
     private WeekPortApplication tutorApp;
+    protected static Logger logger = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         flingWidthPX = DisplayUtil.dip2px(this, 100);
         tutorApp = (WeekPortApplication) getApplication();
+        logger = LoggerFactory.getLogger(this.getClass());
     }
 
     @Override
@@ -73,6 +79,7 @@ public class BaseActivity extends AppCompatActivity {
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(getTitle());
+            actionBar.setLogo(R.drawable.logo);
         }
     }
 
@@ -120,4 +127,10 @@ public class BaseActivity extends AppCompatActivity {
     public DbUtils getDbUtils() {
         return getTutorApp().getDbUtils();
     }
+
+    @Override protected void onDestroy() {
+        super.onDestroy();
+    }
+
+
 }

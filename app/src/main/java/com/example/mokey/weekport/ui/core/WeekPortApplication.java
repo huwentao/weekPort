@@ -27,9 +27,9 @@ public class WeekPortApplication extends Application {
         super.onCreate();
         CrashHandler crashHandler = CrashHandler.getInstance();
         // 注册crashHandler
-        crashHandler.init(getApplicationContext());
+//        crashHandler.init(getApplicationContext());
         // 发送以前没发送的报告(可选)
-        crashHandler.sendPreviousReportsToServer();
+//        crashHandler.sendPreviousReportsToServer();
 
         LOGTAG = getPackageName();
         dbUtils = DbUtils.create(this);

@@ -34,4 +34,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     //    compile 'joda-time:joda-time:2.8.2'
     //    compile 'net.danlew:android.joda:2.8.2'
+    compile 'eu.lp0.slf4j:slf4j-android:1.7.12-0'
 }

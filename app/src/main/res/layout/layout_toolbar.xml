@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
-    app:logo="@drawable/logo"
     app:theme="@style/AppToolBarTheme"
     app:titleTextColor="@color/colorWhite"/>
 

@@ -7,7 +7,7 @@ package com.example.mokey.weekport.util;
 import android.widget.Filter;
 import android.widget.Filterable;
 
-import com.example.mokey.weekport.ui.BaseActivity;
+import com.example.mokey.weekport.ui.core.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

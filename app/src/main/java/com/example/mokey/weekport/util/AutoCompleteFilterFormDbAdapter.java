@@ -8,15 +8,17 @@ import android.database.Cursor;
 import android.widget.Filter;
 import android.widget.Filterable;
 
-import com.orhanobut.logger.Logger;
+import com.example.mokey.weekport.db.DbUtils;
+import com.example.mokey.weekport.db.exception.DbException;
+import com.example.mokey.weekport.db.table.TableUtils;
+import com.example.mokey.weekport.ui.core.BaseActivity;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import www.ht.com.app.db.DbUtils;
-import www.ht.com.app.db.exception.DbException;
-import www.ht.com.app.db.table.TableUtils;
-import www.ht.com.app.ui.core.BaseActivity;
 
 /**
  * Created by monkey on 2015/8/17.
@@ -30,6 +32,7 @@ public abstract class AutoCompleteFilterFormDbAdapter extends BaseAdapter<AutoCo
     private DbUtils dbUtils;
     private List<AutoCompleteFilterObject> filterObjectList = new ArrayList<>();
     private AutoCompleteFilterObject mFilterObject;
+    private static final Logger logger = LoggerFactory.getLogger(AutoCompleteFilterFormDbAdapter.class);
 
     /**
      * @param activity    应用上下文
@@ -82,7 +85,7 @@ public abstract class AutoCompleteFilterFormDbAdapter extends BaseAdapter<AutoCo
                         .append(prefixString)
                         .append("%' order by ")
                         .append(mOrderBycloumnName).toString();
-                Logger.d("autoComplete querysql=%s", querySql);
+                logger.debug("autoComplete querysql={}", querySql);
                 Cursor cursor = null;
                 try {
                     cursor = dbUtils.execQuery(querySql);
@@ -92,7 +95,7 @@ public abstract class AutoCompleteFilterFormDbAdapter extends BaseAdapter<AutoCo
                     results.values = filterObjectList;
                     results.count = filterObjectList.size();
                 } catch (DbException e) {
-                    Logger.e(e, e.getMessage());
+                    logger.error(e.getMessage(), e);
                 }
             }
 

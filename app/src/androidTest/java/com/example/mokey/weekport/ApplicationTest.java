@@ -7,6 +7,7 @@ import com.example.mokey.weekport.data.XmlUtil;
 import com.example.mokey.weekport.data.project.ProjectRoot;
 import com.example.mokey.weekport.data.weekly.Task;
 import com.example.mokey.weekport.data.weekly.WeeklyRoot;
+import com.example.mokey.weekport.ui.core.WeekPortApplication;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -27,13 +28,14 @@ import okio.Okio;
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
-public class ApplicationTest extends ApplicationTestCase<MyApplication> {
+public class ApplicationTest extends ApplicationTestCase<WeekPortApplication> {
 
     private File testFile = null;
     private File projFile;
 
     /**
      * 测试准备，准备XML文件
+     *
      * @throws Exception
      */
     @Override protected void setUp() throws Exception {
@@ -77,7 +79,7 @@ public class ApplicationTest extends ApplicationTestCase<MyApplication> {
     }
 
     public ApplicationTest() {
-        super(MyApplication.class);
+        super(WeekPortApplication.class);
     }
 
     /**
@@ -121,6 +123,7 @@ public class ApplicationTest extends ApplicationTestCase<MyApplication> {
 
     /**
      * 测试读取XML文件内容后并写入新的XML文件
+     *
      * @throws IOException
      * @throws IllegalAccessException
      * @throws XmlPullParserException
@@ -183,12 +186,13 @@ public class ApplicationTest extends ApplicationTestCase<MyApplication> {
                 from.close();
                 to.close();
             }
-            xmlUtil.createXMLFile(weeklyRoot,file);
+            xmlUtil.createXMLFile(weeklyRoot, file);
         }
     }
 
     /**
      * 测试解析XML内容
+     *
      * @throws IOException
      * @throws XmlPullParserException
      * @throws InstantiationException
