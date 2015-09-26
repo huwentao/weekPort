@@ -8,8 +8,11 @@
 
     <color name="colorWhite">#FAFAFA</color>
     <color name="colorBlack">#212121</color>
+    <color name="colorBlackLight">#E0E0E0</color>
+    <color name="listDivider">#E0E0E0</color>
 
     <color name="textColorWhite">#FAFAFA</color>
     <color name="textColorBlack">#212121</color>
     <color name="textColorBlackHint">#E0E0E0</color>
+    <color name="textColorBlackLight">#616161</color>
 </resources>

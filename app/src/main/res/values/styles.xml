@@ -5,8 +5,16 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
         <item name="android:windowBackground">@color/colorWindowBackground</item>
-        <item name="toolbarStyle">@style/AppToolBarTheme</item>
+        <item name="android:actionMenuTextColor">@color/textColorWhite</item>
+        <item name="android:textColor">@color/textColorBlack</item>
+        <item name="android:editTextColor">@color/textColorBlack</item>
+        <item name="android:listDivider">@color/listDivider</item>
+        <item name="android:textColorPrimary">@color/textColorBlack</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorBlackHint</item>
+        <item name="android:textColorHint">@color/textColorBlackHint</item>
+        <item name="android:textColorSecondary">@color/textColorBlackLight</item>
     </style>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="BaseAppTheme">
@@ -26,4 +34,17 @@
         <item name="android:textColor">@color/textColorBlack</item>
     </style>
 
+    <style name="toolBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    </style>
+
+    <style name="TextInputLayoutStyle" parent="Widget.Design.TextInputLayout">
+        <item name="hintTextAppearance">@style/TextInputHintTextAppearance</item>
+        <item name="errorTextAppearance">@style/TextAppearance.Design.Error</item>
+    </style>
+
+    <style name="TextInputHintTextAppearance" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@color/textColorBlack</item>
+        <item name="android:textSize">@dimen/abc_text_size_caption_material</item>
+    </style>
 </resources>

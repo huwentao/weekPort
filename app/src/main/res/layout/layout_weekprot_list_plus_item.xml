@@ -7,4 +7,5 @@
              android:orientation="vertical"
              android:padding="@dimen/buttonPadding"
              android:scaleType="centerInside"
-             android:src="@drawable/arrows_circle_plus"/>
+             android:background="@drawable/sel_button_style"
+             android:src="@drawable/ic_action_plus"/>

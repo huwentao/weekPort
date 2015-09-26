@@ -4,4 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:elevation="6dp"
+    app:itemIconTint="@color/colorPrimary"
+    app:itemTextColor="@color/textColorBlack"
     app:menu="@menu/menu_navi_home"/>

@@ -128,33 +128,33 @@ public class HomeActivity extends BaseActivity
             if (mWeekPortListFragment == null) {
                 mWeekPortListFragment = WeekPortListFragment.newInstance(null, null);
                 baseFragments.put(mWeekPortListFragment.getPrivateTag(), mWeekPortListFragment);
+                transaction.add(R.id.contentContainer, mWeekPortListFragment, mWeekPortListFragment.getPrivateTag());
+                transaction.commit();
             }
-            transaction.add(R.id.contentContainer, mWeekPortListFragment, mWeekPortListFragment.getPrivateTag());
-            transaction.commit();
             return aClass.cast(mWeekPortListFragment);
         } else if (aClass.isAssignableFrom(PersonFragment.class)) {
             if (mPersonFragment == null) {
                 mPersonFragment = PersonFragment.newInstance(null, null);
                 baseFragments.put(mPersonFragment.getPrivateTag(), mPersonFragment);
                 transaction.add(R.id.contentContainer, mPersonFragment, mPersonFragment.getPrivateTag());
+                transaction.commit();
             }
-            transaction.commit();
             return aClass.cast(mPersonFragment);
         } else if (aClass.isAssignableFrom(ProjectFragment.class)) {
             if (mProjectFragment == null) {
                 mProjectFragment = ProjectFragment.newInstance(null, null);
                 baseFragments.put(mProjectFragment.getPrivateTag(), mProjectFragment);
                 transaction.add(R.id.contentContainer, mProjectFragment, mProjectFragment.getPrivateTag());
+                transaction.commit();
             }
-            transaction.commit();
             return aClass.cast(mProjectFragment);
         } else if (aClass.isAssignableFrom(RequirementFragment.class)) {
             if (mRequirementFragment == null) {
                 mRequirementFragment = RequirementFragment.newInstance(null, null);
                 baseFragments.put(mRequirementFragment.getPrivateTag(), mRequirementFragment);
                 transaction.add(R.id.contentContainer, mRequirementFragment, mRequirementFragment.getPrivateTag());
+                transaction.commit();
             }
-            transaction.commit();
             return aClass.cast(mRequirementFragment);
         }
         return null;

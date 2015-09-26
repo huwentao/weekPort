@@ -10,7 +10,7 @@
             <menu>
                 <item
                     android:id="@+id/add"
-                    android:icon="@drawable/arrows_circle_plus"
+                    android:icon="@drawable/ic_action_plus"
                     android:title="@string/addTask"
                     app:showAsAction="always"/>
             </menu>

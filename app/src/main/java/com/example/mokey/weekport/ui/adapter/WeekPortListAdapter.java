@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import com.example.mokey.weekport.R;
 import com.example.mokey.weekport.data.weekly.Task;
@@ -21,58 +20,32 @@ import butterknife.ButterKnife;
 /**
  * Created by mokey on 15-9-23.
  */
-public class WeekPortListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class WeekPortListAdapter extends RecyclerView.Adapter<WeekPortListAdapter.WeekPortItem> {
     private Context mContext;
     private List<Task> mTaskList = new ArrayList<>();
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == ITEM_TYPE) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.layout_weekport_list_item,
-                    parent,
-                    false
-            );
-            return new WeekPortItem(view);
-        } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.layout_weekprot_list_plus_item,
-                    parent,
-                    false
-            );
-            return new PlusView(view);
-        }
+    public WeekPortItem onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.layout_weekport_list_item,
+                parent,
+                false
+        );
+        return new WeekPortItem(view);
     }
 
-    @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position) == ITEM_TYPE) {
-            WeekPortItem weekPortItem = (WeekPortItem) holder;
-            weekPortItem.toolbar.inflateMenu(R.menu.menu_toolbar_contentlist);
-            weekPortItem.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override public boolean onMenuItemClick(MenuItem item) {
-                    return false;
-                }
-            });
-        }
+    @Override public void onBindViewHolder(WeekPortItem holder, int position) {
+        WeekPortItem weekPortItem = (WeekPortItem) holder;
+        weekPortItem.toolbar.inflateMenu(R.menu.menu_toolbar_contentlist);
+        weekPortItem.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override public boolean onMenuItemClick(MenuItem item) {
+                return false;
+            }
+        });
     }
 
     @Override public int getItemCount() {
-        return mTaskList.size() + 1;
-    }
-
-    public final static int ITEM_TYPE = 1;
-    public final static int PLUS_TYPE = 1;
-
-    /**
-     * @param position
-     * @return
-     */
-    @Override public int getItemViewType(int position) {
-        if (position == getItemCount() - 1) {
-            return PLUS_TYPE;
-        } else {
-            return ITEM_TYPE;
-        }
+        return mTaskList.size() + 10;
     }
 
     /**
@@ -84,23 +57,6 @@ public class WeekPortListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public WeekPortItem(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-        }
-    }
-
-    /**
-     * 添加
-     */
-    class PlusView extends RecyclerView.ViewHolder {
-        @Bind(R.id.plusButton) ImageButton plusButton;
-
-        public PlusView(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-
-                }
-            });
         }
     }
 }

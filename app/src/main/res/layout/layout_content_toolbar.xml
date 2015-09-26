@@ -8,5 +8,6 @@
     app:elevation="0dp"
     android:background="@color/colorWhite"
     app:titleTextColor="@color/textColorBlack"
+    app:theme="@style/Theme.AppCompat.Light.DarkActionBar"
     app:title="2015-10-01"/>
 
