@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/myWeekPort"
+        android:icon="@drawable/calendar"
+        android:title="@string/myWeekPort"
+        app:showAsAction="ifRoom"/>
     <item android:title="@string/action_title">
         <menu>
             <item
                 android:id="@+id/person"
                 android:icon="@drawable/user_man_info"
                 android:title="@string/personInfo"
-                app:showAsAction="always"/>
+                app:showAsAction="ifRoom"/>
             <item
                 android:id="@+id/project"
                 android:icon="@drawable/file_horizontaltext"
                 android:title="@string/projectInfo"
-                app:showAsAction="always"/>
+                app:showAsAction="ifRoom"/>
             <item
                 android:id="@+id/requirement"
                 android:icon="@drawable/file_document"
                 android:title="@string/requirement"
-                app:showAsAction="always"/>
+                app:showAsAction="ifRoom"/>
         </menu>
     </item>
 

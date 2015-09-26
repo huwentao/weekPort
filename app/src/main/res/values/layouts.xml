@@ -2,4 +2,6 @@
 <resources>
     <item name="activity_home" type="layout">@layout/layout_activity_home</item>
     <bool name="isHaveTwoPanel">false</bool>
+    <bool name="isHaveOnePanel">true</bool>
+    <bool name="isHaveThreePanel">false</bool>
 </resources>

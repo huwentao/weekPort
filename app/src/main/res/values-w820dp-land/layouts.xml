@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="activity_home" type="layout">@layout/layout_activity_home_threepanel</item>
-    <bool name="isHaveTwoPanel">true</bool>
+    <bool name="isHaveTwoPanel">false</bool>
+    <bool name="isHaveOnePanel">false</bool>
+    <bool name="isHaveThreePanel">true</bool>
 </resources>

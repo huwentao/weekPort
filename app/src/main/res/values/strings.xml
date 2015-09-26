@@ -25,4 +25,23 @@
     <string name="title_activity_content_detail">ContentDetailActivity</string>
     <string name="plus">添加</string>
     <string name="menu">菜单</string>
+    <string name="person_title">个人信息</string>
+    <string name="userName">姓名</string>
+    <string name="IDNum">身份证号码</string>
+    <string name="filePath">周报文件位置</string>
+    <string name="myWeekPort">我的周报</string>
+    <string name="calendar">日历</string>
+    <string name="importFile">导入</string>
+    <string name="projectName">项目名称</string>
+    <string name="requirementNo">需求编号</string>
+    <string name="taskContent">任务</string>
+    <string name="overtime">加时</string>
+    <string name="trafficFee">交通费</string>
+    <string name="mealFee">餐费</string>
+    <string name="otherFee">其他费用</string>
+    <string name="portType">类型</string>
+    <string name="selPortType">选择类型</string>
+    <string name="outFlag">是否出差</string>
+    <string name="taskType">任务类型</string>
+    <string name="finish">完成</string>
 </resources>

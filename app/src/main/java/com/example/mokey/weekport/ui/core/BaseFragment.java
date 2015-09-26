@@ -22,6 +22,7 @@ public class BaseFragment extends Fragment {
     private String mName = UUID.randomUUID().toString();
     private String mTitle = "";
     private BaseActivity baseActivity;
+    private String privateTag = UUID.randomUUID().toString();
 
     @Override
     public void onAttach(Activity activity) {
@@ -71,4 +72,9 @@ public class BaseFragment extends Fragment {
     public BaseActivity getBaseActivity() {
         return baseActivity;
     }
+
+    public String getPrivateTag() {
+        return privateTag;
+    }
+
 }

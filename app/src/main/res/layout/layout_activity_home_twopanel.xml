@@ -14,7 +14,7 @@
 
         <fragment
             android:id="@+id/navigation_drawer"
-            android:name="com.example.mokey.weekport.ui.NavigationDrawerFragment"
+            android:name="com.example.mokey.weekport.ui.fragment.NavigationDrawerFragment"
             android:layout_width="@dimen/navigation_drawer_width"
             android:layout_height="match_parent"
             android:layout_gravity="start"
@@ -24,12 +24,9 @@
             android:layout_width="10dp"
             android:layout_height="match_parent"/>
 
-        <fragment
-            android:id="@+id/contentListPanel"
-            android:name="com.example.mokey.weekport.ui.ContentListFragment"
+        <FrameLayout
+            android:id="@+id/contentContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            tools:layout="@layout/fragment_navigation_drawer"/>
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </LinearLayout>

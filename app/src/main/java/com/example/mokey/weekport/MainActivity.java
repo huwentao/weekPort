@@ -18,6 +18,7 @@ public class MainActivity extends BaseActivity {
             switch (msg.what) {
                 case GOTO_NEXT:
                     callMe(HomeActivity.class);
+                    finish();
                     break;
             }
         }

@@ -10,4 +10,12 @@
     <dimen name="buttonHeight">50dp</dimen>
     <dimen name="buttonPadding">12dp</dimen>
     <dimen name="dimen_padding">16dp</dimen>
+
+    <dimen name="demen_textsize_maxsmall">12sp</dimen>
+    <dimen name="demen_textsize_small">14sp</dimen>
+    <dimen name="demen_textsize">18sp</dimen>
+    <dimen name="demen_textsize_large">22sp</dimen>
+    <dimen name="dimen_text_padding">10dip</dimen>
+    <dimen name="dimen_drawpadding">3dp</dimen>
+    <dimen name="dimen_button_radius">5dp</dimen>
 </resources>

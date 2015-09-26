@@ -1,13 +1,210 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.example.mokey.weekport.ui.ContentFragment">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_padding"
+        tools:context="com.example.mokey.weekport.ui.fragment.WeekPortFragment">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/dimen_drawpadding"
+            android:drawableRight="@drawable/arrows_square_right"
+            android:gravity="center|left"
+            android:padding="@dimen/dimen_text_padding"
+            android:text="2015-10-01"
+            android:textSize="@dimen/demen_textsize"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="false">
+
+            <EditText
+                android:id="@+id/projectName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dimen_drawpadding"
+                android:drawableRight="@drawable/arrows_square_right"
+                android:ellipsize="end"
+                android:hint="@string/projectName"
+                android:paddingBottom="@dimen/dimen_text_padding"
+                android:paddingLeft="@dimen/dimen_text_padding"
+                android:paddingRight="@dimen/dimen_text_padding"
+                android:singleLine="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="false">
+
+            <EditText
+                android:id="@+id/requirementNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dimen_drawpadding"
+                android:drawableRight="@drawable/arrows_square_right"
+                android:ellipsize="end"
+                android:hint="@string/requirementNo"
+                android:paddingBottom="@dimen/dimen_text_padding"
+                android:paddingLeft="@dimen/dimen_text_padding"
+                android:paddingRight="@dimen/dimen_text_padding"
+                android:singleLine="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="false">
+
+            <EditText
+                android:id="@+id/overtime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/dimen_drawpadding"
+                android:drawableRight="@drawable/arrows_square_right"
+                android:ellipsize="end"
+                android:hint="@string/overtime"
+                android:paddingBottom="@dimen/dimen_text_padding"
+                android:paddingLeft="@dimen/dimen_text_padding"
+                android:paddingRight="@dimen/dimen_text_padding"
+                android:singleLine="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="false">
+
+            <EditText
+                android:id="@+id/taskContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:hint="@string/taskContent"
+                android:maxLines="3"
+                android:paddingBottom="@dimen/dimen_text_padding"
+                android:paddingLeft="@dimen/dimen_text_padding"
+                android:paddingRight="@dimen/dimen_text_padding"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/moreContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:padding="@dimen/dimen_text_padding"
+                android:scaleType="centerInside"
+                android:src="@drawable/arrows_left_double"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="false">
+
+                <EditText
+                    android:id="@+id/trafficFee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:hint="@string/trafficFee"
+                    android:paddingBottom="@dimen/dimen_text_padding"
+                    android:paddingLeft="@dimen/dimen_text_padding"
+                    android:paddingRight="@dimen/dimen_text_padding"
+                    android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="false">
+
+                <EditText
+                    android:id="@+id/mealFee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:hint="@string/mealFee"
+                    android:paddingBottom="@dimen/dimen_text_padding"
+                    android:paddingLeft="@dimen/dimen_text_padding"
+                    android:paddingRight="@dimen/dimen_text_padding"
+                    android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="false">
+
+                <EditText
+                    android:id="@+id/otherFee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:hint="@string/otherFee"
+                    android:paddingBottom="@dimen/dimen_text_padding"
+                    android:paddingLeft="@dimen/dimen_text_padding"
+                    android:paddingRight="@dimen/dimen_text_padding"
+                    android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="false">
+
+                <EditText
+                    android:id="@+id/outFlag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dimen_drawpadding"
+                    android:drawableRight="@drawable/arrows_square_right"
+                    android:ellipsize="end"
+                    android:hint="@string/outFlag"
+                    android:paddingBottom="@dimen/dimen_text_padding"
+                    android:paddingLeft="@dimen/dimen_text_padding"
+                    android:paddingRight="@dimen/dimen_text_padding"
+                    android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:errorEnabled="false">
+
+                <EditText
+                    android:id="@+id/taskType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dimen_drawpadding"
+                    android:drawableRight="@drawable/arrows_square_right"
+                    android:ellipsize="end"
+                    android:hint="@string/taskType"
+                    android:paddingBottom="@dimen/dimen_text_padding"
+                    android:paddingLeft="@dimen/dimen_text_padding"
+                    android:paddingRight="@dimen/dimen_text_padding"
+                    android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/sel_button_style"
+            android:text="@string/finish"/>
+    </LinearLayout>
+</ScrollView>

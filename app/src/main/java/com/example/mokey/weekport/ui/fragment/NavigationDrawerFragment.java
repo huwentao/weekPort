@@ -1,4 +1,4 @@
-package com.example.mokey.weekport.ui;
+package com.example.mokey.weekport.ui.fragment;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -19,7 +19,6 @@ import com.example.mokey.weekport.R;
 import com.example.mokey.weekport.ui.core.BaseFragment;
 
 /**
- *
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
@@ -37,7 +36,7 @@ public class NavigationDrawerFragment extends BaseFragment {
      */
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
-    /**
+    /**container
      * A pointer to the current callbacks instance (the Activity).
      */
     private NavigationDrawerCallbacks mCallbacks;
@@ -84,7 +83,8 @@ public class NavigationDrawerFragment extends BaseFragment {
         mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        return false;
+                        mCallbacks.onNavigationDrawerItemSelected(menuItem.getItemId());
+                        return true;
                     }
                 });
         return mNavigationView;
@@ -227,6 +227,10 @@ public class NavigationDrawerFragment extends BaseFragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int position);
+        void onNavigationDrawerItemSelected(int itemId);
+    }
+
+    public void setCallbacks(NavigationDrawerCallbacks mCallbacks) {
+        this.mCallbacks = mCallbacks;
     }
 }
