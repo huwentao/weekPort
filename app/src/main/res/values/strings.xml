@@ -14,7 +14,7 @@
 
     <string name="action_example">Example action</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="intoApp">立即进入</string>
     <string name="action_title">周报</string>
@@ -51,4 +51,6 @@
     <string name="tip_title">提示</string>
     <string name="nodata">空</string>
     <string name="title_activity_project_list">选择参与项目</string>
+    <string name="searchTitle">搜索</string>
+    <string name="loadMore">数据加载中，请稍后</string>
 </resources>

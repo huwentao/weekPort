@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
 public class WeekPortApplication extends Application implements DbUtils.DbUpgradeListener {
     private DbUtils dbUtils;
     private User mUser;
-    private String dbPath = "/weekport/db/";
-    private String dbName = "weekport";
-    private int dbVersion = 1;
+    private final static String dbPath = "/weekport/db/";
+    private final static String dbName = "weekport.db";
+    private final static int dbVersion = 1;
     private Logger logger = LoggerFactory.getLogger(WeekPortApplication.class);
 
     @Override
@@ -31,7 +31,7 @@ public class WeekPortApplication extends Application implements DbUtils.DbUpgrad
         super.onCreate();
         CrashHandler crashHandler = CrashHandler.getInstance();
         // 注册crashHandler
-        crashHandler.init(getApplicationContext());
+//        crashHandler.init(getApplicationContext());
         // 发送以前没发送的报告(可选)
 //        crashHandler.sendPreviousReportsToServer();
 

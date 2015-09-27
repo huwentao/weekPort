@@ -4,6 +4,7 @@ package com.example.mokey.weekport.ui.fragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,15 +14,18 @@ import android.view.ViewGroup;
 import com.example.mokey.weekport.MainActivity;
 import com.example.mokey.weekport.R;
 import com.example.mokey.weekport.data.project.Proj;
+import com.example.mokey.weekport.data.project.ProjectRoot;
 import com.example.mokey.weekport.data.user.User;
 import com.example.mokey.weekport.data.user.UserProject;
 import com.example.mokey.weekport.db.exception.DbException;
 import com.example.mokey.weekport.db.sqlite.Selector;
+import com.example.mokey.weekport.task.ImportProjectFileTask;
 import com.example.mokey.weekport.ui.HomeActivity;
 import com.example.mokey.weekport.ui.ProjectListActivity;
 import com.example.mokey.weekport.ui.adapter.ProjectAdapter;
 import com.example.mokey.weekport.ui.core.BaseFragment;
 import com.example.mokey.weekport.util.DialogUtil;
+import com.example.mokey.weekport.util.SnackBarUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +45,7 @@ public class ProjectFragment extends BaseFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM_TITLE = "arg_param_title";
     private static final String ARG_PARAM2 = "param2";
+    private ImportProjectFileTask importProjectFileTask = null;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -48,6 +53,7 @@ public class ProjectFragment extends BaseFragment {
     private ProjectAdapter mProjectAdapter = null;
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    @Bind(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
     private List<Proj> mProjList = new ArrayList<>();
     private Logger logger = LoggerFactory.getLogger(ProjectFragment.class);
     private User user;
@@ -92,6 +98,7 @@ public class ProjectFragment extends BaseFragment {
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initProjectData();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setHasFixedSize(true);
@@ -104,44 +111,49 @@ public class ProjectFragment extends BaseFragment {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
-                                        HomeActivity homeActivity = ((HomeActivity) getActivity());
-                                        Bundle bundle = new Bundle();
-                                        bundle.putParcelable(MainActivity.CURRENT_USER, user);
-                                        if (homeActivity.isNeedNewActivity()) {
-                                            getBaseActivity().callMe(ProjectListActivity.class, bundle);
-                                        } else {
-                                            homeActivity.loadThreeFragment(ProjectListFragment.class, bundle);
-                                        }
+                                        gotoChoiceProject();
                                     }
                                 }, "取消", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        HomeActivity homeActivity = ((HomeActivity) getActivity());
-                                        Bundle bundle = new Bundle();
-                                        bundle.putParcelable(MainActivity.CURRENT_USER, user);
-                                        if (homeActivity.isNeedNewActivity()) {
-                                            getBaseActivity().callMe(ProjectListActivity.class, bundle);
-                                        } else {
-                                            homeActivity.loadThreeFragment(ProjectListFragment.class, bundle);
-                                        }
+                                        dialog.dismiss();
+                                        gotoChoiceProject();
                                     }
                                 }).show();
                     }
                 }, new ProjectAdapter.NodataListener() {
             @Override public void onItemClick() {
-
+                gotoChoiceProject();
             }
         }));
-        initProjectData();
+        //载入新项目配置任务
+        importProjectFileTask = new ImportProjectFileTask(getBaseActivity().getDbUtils(), getActivity(),
+                new ImportProjectFileTask.TaskCallback() {
+                    @Override public void finish(ProjectRoot projectRoot) {
+                        SnackBarUtils.makeSnackBar(coordinatorLayout, "导入成功");
+                        gotoChoiceProject();
+                    }
+
+                    @Override public void failed(Exception e) {
+                        SnackBarUtils.makeSnackBar(coordinatorLayout, "导入失败了");
+                    }
+
+                    @Override public void cancel(Exception e) {
+                        SnackBarUtils.makeSnackBar(coordinatorLayout, "导入取消");
+                    }
+                });
     }
 
     private void initProjectData() {
         user = ((HomeActivity) getActivity()).getCurrentUser();
         if (user != null) {
             try {
-                getBaseActivity().getDbUtils()
+                List<Proj> projs = getBaseActivity().getDbUtils()
                         .findAll(Selector.from(UserProject.class)
                                 .where("user_id", "=", user.getUserId()));
+                if (projs != null) {
+                    mProjList.addAll(projs);
+                }
             } catch (DbException e) {
                 logger.error(e.getMessage(), e);
             }
@@ -152,6 +164,21 @@ public class ProjectFragment extends BaseFragment {
      *
      */
     public void importProjectFile() {
-
+        importProjectFileTask.execute();
     }
+
+    public void gotoChoiceProject() {
+        HomeActivity homeActivity = ((HomeActivity) getActivity());
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(MainActivity.CURRENT_USER, user);
+        if (homeActivity.isNeedNewActivity()) {
+            getBaseActivity().callMe(ProjectListActivity.class, bundle);
+        } else {
+            homeActivity.loadThreeFragment(ProjectListFragment.class, bundle);
+        }
+    }
+
+    /**
+     * 导入项目配置文件
+     */
 }

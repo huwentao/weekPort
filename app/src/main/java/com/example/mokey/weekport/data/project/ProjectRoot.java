@@ -34,6 +34,7 @@ public class ProjectRoot implements Parcelable {
     @Column(column = "docVersion")
     private String docVersion;
     @XmlFieldName(fieldName = "proj-list", type = FieldType.ListType)
+    @Foreign(column = "projId", foreign = "_id")
     private List<Proj> projList;
 
     public String getCreateTime() {

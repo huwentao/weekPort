@@ -1,9 +1,12 @@
 package com.example.mokey.weekport.util;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.widget.ListAdapter;
+
+import com.example.mokey.weekport.R;
 
 /**
  * Created by mokey on 15-9-27.
@@ -28,12 +31,11 @@ public class DialogUtil {
             String negativeText,
             DialogInterface.OnClickListener onNegativeClickListener
     ) {
-        return getAlertDialog(context, null, context.getString(titleResId), message, positiveText, onPositiveClickListener, negativeText, onNegativeClickListener, true, null);
+        return getAlertDialog(context, context.getString(titleResId), message, positiveText, onPositiveClickListener, negativeText, onNegativeClickListener, true, null);
     }
 
     /**
      * @param context
-     * @param iconResId
      * @param title
      * @param message
      * @param positiveText
@@ -46,7 +48,6 @@ public class DialogUtil {
      */
     public static AlertDialog getAlertDialog(
             Context context,
-            Integer iconResId,
             String title,
             String message,
             String positiveText,
@@ -56,8 +57,7 @@ public class DialogUtil {
             boolean cancelable,
             DialogInterface.OnCancelListener onCancelListener
     ) {
-        return new AlertDialog.Builder(context)
-                .setIcon(iconResId)
+        return new AlertDialog.Builder(context, R.style.appAlertDialogTheme)
                 .setMessage(message)
                 .setTitle(title)
                 .setPositiveButton(positiveText, onPositiveClickListener)
@@ -80,7 +80,7 @@ public class DialogUtil {
             ListAdapter listAdapter,
             DialogInterface.OnClickListener onClickListener
     ) {
-        return getListAlertDialog(context, null, title, listAdapter, onClickListener, true, null);
+        return getListAlertDialog(context, title, listAdapter, onClickListener, true, null);
     }
 
     /**
@@ -97,12 +97,11 @@ public class DialogUtil {
             DialogInterface.OnClickListener onClickListener,
             DialogInterface.OnCancelListener onCancelListener
     ) {
-        return getListAlertDialog(context, null, title, listAdapter, onClickListener, true, onCancelListener);
+        return getListAlertDialog(context, title, listAdapter, onClickListener, true, onCancelListener);
     }
 
     /**
      * @param context
-     * @param iconResId
      * @param title
      * @param listAdapter
      * @param onClickListener
@@ -112,19 +111,53 @@ public class DialogUtil {
      */
     public static AlertDialog getListAlertDialog(
             Context context,
-            Integer iconResId,
             String title,
             ListAdapter listAdapter,
             DialogInterface.OnClickListener onClickListener,
             boolean cancelable,
             DialogInterface.OnCancelListener onCancelListener
     ) {
-        return new AlertDialog.Builder(context)
-                .setIcon(iconResId)
+        return new AlertDialog.Builder(context, R.style.appAlertDialogTheme)
                 .setTitle(title)
                 .setAdapter(listAdapter, onClickListener)
                 .setCancelable(cancelable)
                 .setOnCancelListener(onCancelListener)
                 .create();
+    }
+
+    /**
+     * @param context
+     * @return
+     */
+    public static ProgressDialog getProgressDialog(Context context, String message) {
+        return getProgressDialog(context, message, false, null);
+    }
+
+    /**
+     * @param context
+     * @param onCancelListener
+     * @return
+     */
+    public static ProgressDialog getProgressDialog(Context context,
+                                                   String message,
+                                                   DialogInterface.OnCancelListener onCancelListener) {
+        return getProgressDialog(context, message, true, onCancelListener);
+    }
+
+    /**
+     * @param context
+     * @param cancelabe
+     * @param onCancelListener
+     * @return
+     */
+    public static ProgressDialog getProgressDialog(Context context,
+                                                   String message,
+                                                   boolean cancelabe,
+                                                   DialogInterface.OnCancelListener onCancelListener) {
+        ProgressDialog progressDialog = new ProgressDialog(context, R.style.mProgress_circle);
+        progressDialog.setCancelable(cancelabe);
+        progressDialog.setMessage(message);
+        progressDialog.setOnCancelListener(onCancelListener);
+        return progressDialog;
     }
 }

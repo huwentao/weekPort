@@ -649,11 +649,11 @@ public class DbUtils {
         String storageState = Environment.getExternalStorageState();
         if (!TextUtils.isEmpty(dbDir) && storageState.equals(Environment.MEDIA_MOUNTED)) {
             File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + dbDir);
-            if (!dir.exists() || dir.mkdirs()) {
+            if (dir.exists() || dir.mkdirs()) {
             }
             File dbFile = new File(dir, config.getDbName());
             try {
-                if (!dbFile.exists() || dbFile.createNewFile()) {
+                if (dbFile.exists() || dbFile.createNewFile()) {
                 }
                 result = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
             } catch (IOException e) {

@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.mokey.weekport.R;
@@ -19,20 +20,25 @@ import butterknife.ButterKnife;
 /**
  * Created by mokey on 15-9-27.
  */
-public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int NODATA_TYPE = 0;
     private static final int PROJLIST_TYPE = 1;
+    private static final int LOADMORE_TYPE = 2;
     private List<Proj> projList = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private NodataListener nodataListener;
+    private OnLoadMoreListener onLoadMoreListener;
+    private boolean loadAllData = false;
 
-    public ProjectAdapter(List<Proj> projList, OnItemClickListener onItemClickListener, NodataListener nodataListener) {
+    public ProjectListAdapter(List<Proj> projList,
+                              OnItemClickListener onItemClickListener,
+                              NodataListener nodataListener) {
         this.projList = projList;
         this.onItemClickListener = onItemClickListener;
         this.nodataListener = nodataListener;
     }
 
-    public ProjectAdapter(List<Proj> projList) {
+    public ProjectListAdapter(List<Proj> projList) {
         this.projList = projList;
     }
 
@@ -41,6 +47,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (viewType == PROJLIST_TYPE) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_projectlist_item, parent, false);
             return new ProjectItemView(view);
+        } else if (viewType == LOADMORE_TYPE) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_loadmore_item, parent, false);
+            return new LoadMoreView(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listnodata_item, parent, false);
             return new NoDataView(view);
@@ -55,19 +64,30 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             TextUtil.setText(projectItemView.projectCode, proj.getProjId());
             TextUtil.setText(projectItemView.projectCode, proj.getProjName());
             projectItemView.setOnItemClickListener(position, proj);
-        } else {
+        } else if (getItemViewType(position) == PROJLIST_TYPE) {
             NoDataView noDataView = (NoDataView) holder;
             TextUtil.setText(noDataView.noDataText, "空，前往添加项目");
+        }
+        if (getItemViewType(position) == LOADMORE_TYPE) {
+            if (onLoadMoreListener != null) {
+                onLoadMoreListener.loadMore();
+            }
         }
     }
 
     @Override public int getItemCount() {
-        return projList.size() == 0 ? 1 : projList.size();
+        if (loadAllData) {
+            return projList.size() == 0 ? 1 : projList.size();
+        } else {
+            return projList.size() == 0 ? 1 : projList.size() + 1;
+        }
     }
 
     @Override public int getItemViewType(int position) {
         if (projList.size() == 0) {
             return NODATA_TYPE;
+        } else if (!loadAllData && position == projList.size() - 1) {
+            return LOADMORE_TYPE;
         } else {
             return PROJLIST_TYPE;
         }
@@ -110,6 +130,16 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    public class LoadMoreView extends RecyclerView.ViewHolder {
+        @Bind(R.id.loading) ProgressBar loading;
+        @Bind(R.id.loadMore) TextView loadMore;
+
+        public LoadMoreView(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
     public interface OnItemClickListener {
         public void onItemClick(int position, Proj proj);
     }
@@ -124,5 +154,21 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void setNodataListener(NodataListener nodataListener) {
         this.nodataListener = nodataListener;
+    }
+
+    public interface OnLoadMoreListener {
+        public void loadMore();
+    }
+
+    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        this.onLoadMoreListener = onLoadMoreListener;
+    }
+
+    public boolean isLoadAllData() {
+        return loadAllData;
+    }
+
+    public void setLoadAllData(boolean loadAllData) {
+        this.loadAllData = loadAllData;
     }
 }

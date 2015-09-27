@@ -35,8 +35,10 @@ import okio.Okio;
  */
 public class XmlUtil {
     private static XmlUtil xmlUtil = null;
-    private String xmlDirectory = "/weekport/requirement/";
-    private String xmlrequrementFileName = "requrement.xml";
+    public final static String xmlProjectDirectory = "/weekport/project/";
+    public final static String xmlProjectFileName = "project.xml";
+    public final static String xmlWeekPortDirectory = "/weekport/export/";
+
 
     private XmlUtil() {
 
@@ -52,10 +54,27 @@ public class XmlUtil {
     /**
      * @return
      */
-    public List<File> getRequirementFileList() {
+    public static File getXmlProjectDirectory() {
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + xmlProjectDirectory);
+        if (file.exists() || file.mkdirs()) {
+        }
+        return file;
+    }
+
+    public static File getXmlWeekPortDirectory() {
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + xmlWeekPortDirectory);
+        if (file.exists() || file.mkdirs()) {
+        }
+        return file;
+    }
+
+    /**
+     * @return
+     */
+    public List<File> getProjectListFiles() {
         String storageState = Environment.getExternalStorageState();
         if (storageState.equals(Environment.MEDIA_MOUNTED)) {
-            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + xmlDirectory);
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + xmlProjectDirectory);
             if (file.exists())
                 return Arrays.asList(file.listFiles());
         }
@@ -80,13 +99,10 @@ public class XmlUtil {
             DbException {
         String storageState = Environment.getExternalStorageState();
         if (storageState.equals(Environment.MEDIA_MOUNTED)) {
-            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + xmlDirectory);
+            File file = getXmlProjectDirectory();
             File requirement = new File(file.getAbsolutePath() + "/" + requirementFileName);
-            if (file.exists() || file.mkdirs()) {
-            }
-
             if (requirement.exists() || requirement.createNewFile()) {
-                InputStream inputStream = context.getAssets().open(xmlrequrementFileName);
+                InputStream inputStream = context.getAssets().open(xmlProjectFileName);
                 BufferedSource bufferedSource = Okio.buffer(Okio.source(inputStream));
                 BufferedSink bufferedSink = Okio.buffer(Okio.sink(requirement));
                 bufferedSink.writeAll(bufferedSource);
@@ -394,4 +410,6 @@ public class XmlUtil {
             return tList;
         }
     }
+
+
 }

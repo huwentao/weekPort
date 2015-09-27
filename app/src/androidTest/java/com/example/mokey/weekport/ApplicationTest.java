@@ -44,30 +44,25 @@ public class ApplicationTest extends ApplicationTestCase<WeekPortApplication> {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             File file = Environment.getExternalStorageDirectory();
             file = new File(file.getAbsolutePath() + "/weekport/report/");
-            if (!file.exists()) {
-                file.mkdirs();
-            }
+            if (file.exists()||file.mkdirs()) {}
             String deirectory = file.getAbsolutePath();
             DateTime dateTime = DateTime.now(TimeZone.getDefault());
             file = new File(deirectory + "/" + dateTime.format("YYYYMMDD.demo.xml"));
-            if (!file.exists()) {
-                boolean flag = file.createNewFile();
-                if (flag) {
-                    BufferedSource from = Okio.buffer(Okio.source(getApplication().getAssets().open("20150824.xml")));
-                    BufferedSink to = Okio.buffer(Okio.sink(file));
-                    to.writeAll(from);
-                    to.flush();
-                    from.close();
-                    to.close();
-                }
-                testFile = file;
-            }
+            if (file.exists()||file.createNewFile()) {}
+            BufferedSource from = Okio.buffer(Okio.source(getApplication().getAssets().open("20150824.xml")));
+            BufferedSink to = Okio.buffer(Okio.sink(file));
+            to.writeAll(from);
+            to.flush();
+            from.close();
+            to.close();
+            testFile = file;
+
             file = new File(deirectory + "/" + dateTime.format("YYYYMMDD.projectdemo.xml"));
             if (!file.exists()) {
                 boolean flag = file.createNewFile();
                 if (flag) {
-                    BufferedSource from = Okio.buffer(Okio.source(getApplication().getAssets().open("requrement.xml")));
-                    BufferedSink to = Okio.buffer(Okio.sink(file));
+                    from = Okio.buffer(Okio.source(getApplication().getAssets().open("project.xml")));
+                    to = Okio.buffer(Okio.sink(file));
                     to.writeAll(from);
                     to.flush();
                     from.close();

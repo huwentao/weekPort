@@ -197,7 +197,7 @@ public class HomeActivity extends BaseActivity
             return aClass.cast(mWeekPortListFragment);
         } else if (aClass.isAssignableFrom(PersonFragment.class)) {
             if (mPersonFragment == null) {
-                mPersonFragment = PersonFragment.newInstance(getString(R.string.personInfo), null);
+                mPersonFragment = PersonFragment.newInstance(getString(R.string.personInfo), mCurrentUser);
                 baseFragments.put(mPersonFragment.getPrivateTag(), mPersonFragment);
                 transaction.add(R.id.contentContainer, mPersonFragment, mPersonFragment.getPrivateTag());
                 transaction.commit();

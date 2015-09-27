@@ -20,35 +20,44 @@
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:theme="@style/TextInputLayoutStyle"
-        app:colorControlActivated="@color/colorBlack"
-        app:errorEnabled="false">
+        app:colorControlActivated="@color/colorPrimary"
+        app:errorEnabled="false"
+        app:theme="@style/TextInputLayoutStyle">
 
         <EditText
             android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/userName"
-            android:paddingBottom="@dimen/dimen_text_padding"/>
+            android:paddingBottom="@dimen/dimen_text_padding"
+            android:singleLine="true">
+
+            <requestFocus/>
+        </EditText>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorEnabled="false">
+        app:colorControlActivated="@color/colorPrimary"
+        app:errorEnabled="false"
+        app:theme="@style/TextInputLayoutStyle">
 
         <EditText
             android:id="@+id/IDNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/IDNum"
-            android:paddingBottom="@dimen/dimen_text_padding"/>
+            android:paddingBottom="@dimen/dimen_text_padding"
+            android:singleLine="true"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:errorEnabled="false">
+        app:colorControlActivated="@color/colorPrimary"
+        app:errorEnabled="false"
+        app:theme="@style/TextInputLayoutStyle">
 
         <EditText
             android:id="@+id/filePath"

@@ -1,21 +1,35 @@
 package com.example.mokey.weekport.ui.fragment;
 
-import android.app.Activity;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mokey.weekport.R;
-import com.example.mokey.weekport.data.user.User;
+import com.example.mokey.weekport.data.project.Proj;
+import com.example.mokey.weekport.db.DbUtils;
+import com.example.mokey.weekport.db.exception.DbException;
+import com.example.mokey.weekport.db.sqlite.Selector;
+import com.example.mokey.weekport.ui.adapter.ProjectListAdapter;
 import com.example.mokey.weekport.ui.core.BaseFragment;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.Bind;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ProjectListFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link ProjectListFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -29,8 +43,14 @@ public class ProjectListFragment extends BaseFragment {
     // TODO: Rename and change types of parameters
     private Bundle mUserBundle;
     private String mParam2;
+    private List<Proj> mProjList = new ArrayList<>();
+    private ProjectListAdapter projectListAdapter = null;
 
-    private OnFragmentInteractionListener mListener;
+    @Bind(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
+    @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    @Bind(R.id.toolBar) Toolbar toolBar;
+
+    private int currentNum = 0;
 
     /**
      * Use this factory method to create a new instance of
@@ -66,47 +86,92 @@ public class ProjectListFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_project_list, container, false);
+        View view;
+        boolean isHaveThree = getResources().getBoolean(R.bool.isHaveThreePanel);
+        if (!isHaveThree) {
+            view = inflater.inflate(R.layout.fragment_project_list_other, container, false);
+        } else {
+            view = inflater.inflate(R.layout.fragment_project_list, container, false);
+        }
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        boolean isHaveThree = getResources().getBoolean(R.bool.isHaveThreePanel);
+        if (!isHaveThree) {
+            getBaseActivity().setSupportActionBar(toolBar);
+            getBaseActivity().initToolBar();
+            toolBar.setLogo(null);
+        } else {
+            toolBar.inflateMenu(R.menu.menu_projectlist);
+            initSearchMenu(toolBar.getMenu());
+        }
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        projectListAdapter = new ProjectListAdapter(mProjList, new ProjectListAdapter.OnItemClickListener() {
+            @Override public void onItemClick(int position, Proj proj) {
+
+            }
+        }, new ProjectListAdapter.NodataListener() {
+            @Override public void onItemClick() {
+
+            }
+        });
+        projectListAdapter.setOnLoadMoreListener(new ProjectListAdapter.OnLoadMoreListener() {
+            @Override public void loadMore() {
+                if (loadProjectData.isCancelled()) {//还在加载中时不再多次加载
+                    loadProjectData.execute();
+                }
+            }
+        });
+        loadProjectData.execute();
+    }
+
+    public void initSearchMenu(Menu menu) {
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.clearFocus();
+        searchView.setQueryHint("输入项目编号/项目名称搜索");
+        searchView.setIconified(false);
+        searchView.setIconifiedByDefault(true);
+    }
+
+    private AsyncTask<Integer, Integer, List<Proj>> loadProjectData = new AsyncTask<Integer, Integer, List<Proj>>() {
+
+        @Override protected List<Proj> doInBackground(Integer... params) {
+            List<Proj> projList = null;
+            try {
+                DbUtils dbUtils = getBaseActivity().getDbUtils();
+                projList = dbUtils.findAll(Selector.from(Proj.class)
+                        .orderBy("projId")
+                        .limit(30)
+                        .offset(currentNum));
+                currentNum += 30;
+            } catch (DbException e) {
+                e.printStackTrace();
+            }
+            return projList;
+        }
+
+        @Override protected void onPostExecute(List<Proj> projList) {
+            if (projList != null) {//载入更多数据
+                mProjList.addAll(projList);
+                projectListAdapter.notifyItemRangeChanged(mProjList.size(), projList.size());
+            } else {//没有更多数据
+                projectListAdapter.setLoadAllData(true);
+                projectListAdapter.notifyItemChanged(projectListAdapter.getItemCount() - 1);
+            }
+        }
+    };
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        if (loadProjectData != null && !loadProjectData.isCancelled()) {
+            loadProjectData.cancel(true);
         }
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
 }

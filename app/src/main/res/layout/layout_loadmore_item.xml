@@ -7,17 +7,19 @@
               android:orientation="horizontal"
               android:padding="@dimen/dimen_padding">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_nodata"/>
+    <ProgressBar
+        android:id="@+id/loading"
+        style="@style/mProgress_circle"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:indeterminateDuration="1200"/>
 
     <TextView
-        android:id="@+id/noDataText"
+        android:id="@+id/loadMore"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/dimen_padding"
-        android:text="@string/nodata"
+        android:text="@string/loadMore"
         android:textColor="@color/colorPrimary"/>
 </LinearLayout>

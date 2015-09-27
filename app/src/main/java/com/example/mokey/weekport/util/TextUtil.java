@@ -10,7 +10,6 @@ import java.text.MessageFormat;
  */
 public class TextUtil {
     /**
-     *
      * @param textView
      * @param text
      */
@@ -23,12 +22,12 @@ public class TextUtil {
      * @param placeText 例: 姓名：{0}
      * @param text
      */
-    public static void setText(TextView textView, String placeText, String... text) {
+    public static void setText(TextView textView, String placeText, Object... text) {
         if (placeText != null) {
             placeText = MessageFormat.format(placeText, text);
             textView.setText(placeText);
         } else if (text != null && text.length == 1) {
-            textView.setText(TextUtils.isEmpty(text[0]) ? "" : text[0]);
+            textView.setText(TextUtils.isEmpty(text[0].toString()) ? "" : text[0].toString());
         }
     }
 
