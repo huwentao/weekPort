@@ -61,20 +61,9 @@ public class ImportProjectFileTask extends AsyncTask<Integer, Integer, ProjectRo
 
     @Override protected void onCancelled() {
         super.onCancelled();
-        if (projectRoot != null) {
-            try {
-                mDbUtils.deleteAll(ProjectRoot.class);
-                mDbUtils.deleteAll(Proj.class);
-                mDbUtils.saveOrUpdate(projectRoot);
-                if (mTaskCallback != null) {
-                    mTaskCallback.cancel(null);
-                }
-            } catch (DbException e) {
-                logger.error(e.getMessage(), e);
-                if (mTaskCallback != null) {
-                    mTaskCallback.cancel(e);
-                }
-            }
+        restoreProjectData();
+        if (mTaskCallback != null) {
+            mTaskCallback.cancel(null);
         }
     }
 
@@ -84,8 +73,7 @@ public class ImportProjectFileTask extends AsyncTask<Integer, Integer, ProjectRo
             //备份原数据
             projectRoot = mDbUtils.findFirst(ProjectRoot.class);
             if (projectRoot != null) {
-                List<Proj> projList = mDbUtils.findAll(Selector.from(Proj.class)
-                        .where("projectId", "=", projectRoot.getProjectId()));
+                List<Proj> projList = mDbUtils.findAll(Selector.from(Proj.class));
                 projectRoot.setProjList(projList);
             } else {
                 mDbUtils.deleteAll(Proj.class);
@@ -106,18 +94,30 @@ public class ImportProjectFileTask extends AsyncTask<Integer, Integer, ProjectRo
             newProjectRoot = xmlUtil.parseXMLToObject(ProjectRoot.class, file);
             mDbUtils.deleteAll(ProjectRoot.class);
             mDbUtils.deleteAll(Proj.class);
-            mDbUtils.saveOrUpdate(projectRoot);
             for (Proj proj : newProjectRoot.getProjList()) {
-                proj.setProjectRoot(projectRoot);
+                proj.setProjectRoot(newProjectRoot);
             }
-            mDbUtils.saveOrUpdateAll(newProjectRoot.getProjList());
+            mDbUtils.saveOrUpdate(newProjectRoot);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            restoreProjectData();
             if (mTaskCallback != null) {
                 mTaskCallback.failed(e);
             }
         }
         return newProjectRoot;
+    }
+
+    public void restoreProjectData() {
+        try {
+            if (projectRoot != null) {
+                mDbUtils.deleteAll(ProjectRoot.class);
+                mDbUtils.deleteAll(Proj.class);
+                mDbUtils.saveOrUpdate(projectRoot);
+            }
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
     }
 
     public interface TaskCallback {

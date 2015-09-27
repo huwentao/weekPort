@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.GestureDetector;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -79,19 +80,24 @@ public class BaseActivity extends AppCompatActivity {
         if (toolBar != null) {
             setSupportActionBar(toolBar);
         }
-        initToolBar();
+        initToolBar(getTitle().toString());
     }
 
     /**
      * 初始化Toolbar的初始配置
      */
-    public void initToolBar() {
+    public void initToolBar(String title) {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(getTitle());
-            actionBar.setLogo(R.drawable.logo);
+            if (TextUtils.isEmpty(title)) {
+                actionBar.setLogo(R.drawable.logo);
+                actionBar.setTitle("");
+            } else {
+                actionBar.setTitle(getTitle());
+                actionBar.setLogo(null);
+            }
         }
     }
 

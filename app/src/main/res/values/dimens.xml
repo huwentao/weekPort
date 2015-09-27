@@ -10,6 +10,7 @@
     <dimen name="buttonHeight">50dp</dimen>
     <dimen name="buttonPadding">12dp</dimen>
     <dimen name="dimen_padding">16dp</dimen>
+    <dimen name="dimen_padding_small">12dp</dimen>
 
     <dimen name="demen_textsize_maxsmall">12sp</dimen>
     <dimen name="demen_textsize_small">14sp</dimen>

@@ -1,6 +1,7 @@
 package com.example.mokey.weekport.util;
 
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,8 +24,8 @@ public class SnackBarUtils {
         View snackbarLayout = snackbar.getView();
         TextView mMessageView = (TextView) snackbarLayout.findViewById(android.support.design.R.id.snackbar_text);
         TextView mActionView = (TextView) snackbarLayout.findViewById(android.support.design.R.id.snackbar_action);
-        mActionView.setTextColor(view.getResources().getColor(R.color.colorAccent));
-        mMessageView.setTextColor(view.getResources().getColor(R.color.textColorWhite));
+        mActionView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.colorAccent));
+        mMessageView.setTextColor(ContextCompat.getColor(view.getContext(), R.color.textColorWhite));
         return snackbar;
     }
 

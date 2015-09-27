@@ -21,8 +21,7 @@
     <string name="personInfo">个人信息</string>
     <string name="projectInfo">项目导入</string>
     <string name="requirement">需求导入</string>
-    <string name="title_activity_content">ContentActivity</string>
-    <string name="title_activity_content_detail">ContentDetailActivity</string>
+    <string name="title_activity_content"> </string>
     <string name="plus">添加</string>
     <string name="menu">菜单</string>
     <string name="person_title">个人信息</string>

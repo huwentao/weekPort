@@ -101,8 +101,7 @@ public class ProjectListFragment extends BaseFragment {
         boolean isHaveThree = getResources().getBoolean(R.bool.isHaveThreePanel);
         if (!isHaveThree) {
             getBaseActivity().setSupportActionBar(toolBar);
-            getBaseActivity().initToolBar();
-            toolBar.setLogo(null);
+            getBaseActivity().initToolBar(getActivity().getTitle().toString());
         } else {
             toolBar.inflateMenu(R.menu.menu_projectlist);
             initSearchMenu(toolBar.getMenu());
@@ -128,13 +127,14 @@ public class ProjectListFragment extends BaseFragment {
                 }
             }
         });
+        recyclerView.setAdapter(projectListAdapter);
         loadProjectData.execute();
     }
 
     public void initSearchMenu(Menu menu) {
         MenuItem searchItem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.clearFocus();
+        searchView.requestFocus();
         searchView.setQueryHint("输入项目编号/项目名称搜索");
         searchView.setIconified(false);
         searchView.setIconifiedByDefault(true);
@@ -159,8 +159,9 @@ public class ProjectListFragment extends BaseFragment {
 
         @Override protected void onPostExecute(List<Proj> projList) {
             if (projList != null) {//载入更多数据
+                int startPos = mProjList.size();
                 mProjList.addAll(projList);
-                projectListAdapter.notifyItemRangeChanged(mProjList.size(), projList.size());
+                projectListAdapter.notifyItemRangeChanged(startPos, projList.size());
             } else {//没有更多数据
                 projectListAdapter.setLoadAllData(true);
                 projectListAdapter.notifyItemChanged(projectListAdapter.getItemCount() - 1);

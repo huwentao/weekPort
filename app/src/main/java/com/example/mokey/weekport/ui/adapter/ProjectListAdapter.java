@@ -60,9 +60,9 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (getItemViewType(position) == PROJLIST_TYPE) {
             ProjectItemView projectItemView = (ProjectItemView) holder;
             Proj proj = projList.get(position);
-            TextUtil.setText(projectItemView.projectCode, String.valueOf(position));
+            TextUtil.setText(projectItemView.seqText, String.valueOf(position + 1));
             TextUtil.setText(projectItemView.projectCode, proj.getProjId());
-            TextUtil.setText(projectItemView.projectCode, proj.getProjName());
+            TextUtil.setText(projectItemView.projectName, proj.getProjName());
             projectItemView.setOnItemClickListener(position, proj);
         } else if (getItemViewType(position) == PROJLIST_TYPE) {
             NoDataView noDataView = (NoDataView) holder;
@@ -86,7 +86,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override public int getItemViewType(int position) {
         if (projList.size() == 0) {
             return NODATA_TYPE;
-        } else if (!loadAllData && position == projList.size() - 1) {
+        } else if (!loadAllData && position == projList.size()) {
             return LOADMORE_TYPE;
         } else {
             return PROJLIST_TYPE;

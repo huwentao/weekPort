@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Xml;
 
+import com.example.mokey.weekport.data.project.Proj;
 import com.example.mokey.weekport.data.project.ProjectRoot;
 import com.example.mokey.weekport.db.DbUtils;
 import com.example.mokey.weekport.db.exception.DbException;
@@ -114,6 +115,9 @@ public class XmlUtil {
             ProjectRoot projectRoot = parseXMLToObject(ProjectRoot.class, requirement);
             DateTime dateTime = DateTime.now(TimeZone.getDefault());
             projectRoot.setCreateTime(dateTime.format("YYYY-MM-DD hh:mm:ss"));
+            for (Proj proj : projectRoot.getProjList()) {
+                proj.setProjectRoot(projectRoot);
+            }
             dbUtils.saveOrUpdate(projectRoot);
         }
     }

@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -130,16 +131,16 @@ public class ProjectFragment extends BaseFragment {
         importProjectFileTask = new ImportProjectFileTask(getBaseActivity().getDbUtils(), getActivity(),
                 new ImportProjectFileTask.TaskCallback() {
                     @Override public void finish(ProjectRoot projectRoot) {
-                        SnackBarUtils.makeSnackBar(coordinatorLayout, "导入成功");
+                        SnackBarUtils.makeSnackBar(coordinatorLayout, "导入成功").show();;
                         gotoChoiceProject();
                     }
 
                     @Override public void failed(Exception e) {
-                        SnackBarUtils.makeSnackBar(coordinatorLayout, "导入失败了");
+                        SnackBarUtils.makeSnackBar(coordinatorLayout, "导入失败了").show();;
                     }
 
                     @Override public void cancel(Exception e) {
-                        SnackBarUtils.makeSnackBar(coordinatorLayout, "导入取消");
+                        SnackBarUtils.makeSnackBar(coordinatorLayout, "导入取消").show();;
                     }
                 });
     }
@@ -178,7 +179,8 @@ public class ProjectFragment extends BaseFragment {
         }
     }
 
-    /**
-     * 导入项目配置文件
-     */
+    @OnClick(R.id.floatActionButton)
+    public void onClick() {
+        SnackBarUtils.makeSnackBar(coordinatorLayout, "暂不提供选择需求文件").show();;
+    }
 }

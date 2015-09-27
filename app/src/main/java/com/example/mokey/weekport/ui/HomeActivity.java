@@ -36,7 +36,7 @@ import hirondelle.date4j.DateTime;
  */
 public class HomeActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-    @Bind(R.id.toolBar) Toolbar toolbar;
+    @Bind(R.id.toolBar) Toolbar toolBar;
 
     private boolean isHaveTwo = false;
     private boolean isHaveThree = false;
@@ -51,7 +51,6 @@ public class HomeActivity extends BaseActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;//fragment 菜单
 
     private Map<String, BaseFragment> baseFragments = new HashMap<>();
-    private CharSequence mTitle;
     private FragmentManager mFragmentManager;
     private DateTime mChoiseTodayDate;
     private String mShowFragmentTag;
@@ -61,19 +60,18 @@ public class HomeActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setToolBar(toolbar);
-        initToolBar();
+        setSupportActionBar(toolBar);
+        initToolBar(null);
 
         mCurrentUser = getIntent().getParcelableExtra(MainActivity.CURRENT_USER);
 
         mFragmentManager = getSupportFragmentManager();
         mNavigationDrawerFragment = (NavigationDrawerFragment) mFragmentManager
                 .findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
-                toolbar,
+                toolBar,
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         mNavigationDrawerFragment.setCallbacks(this);
@@ -88,11 +86,6 @@ public class HomeActivity extends BaseActivity
 
     }
 
-    private void initToolBar(String title) {
-        setTitle(title);
-        toolbar.setLogo(null);
-    }
-
     @Override
     public void onNavigationDrawerItemSelected(int itemId) {
         // update the main content by replacing fragments
@@ -100,22 +93,18 @@ public class HomeActivity extends BaseActivity
             case R.id.myWeekPort:
                 mWeekPortListFragment = getBaseFragment(WeekPortListFragment.class);
                 showFragment(mWeekPortListFragment.getPrivateTag());
-                initToolBar(mWeekPortListFragment.getTitle());
                 break;
             case R.id.person:
                 mPersonFragment = getBaseFragment(PersonFragment.class);
                 showFragment(mPersonFragment.getPrivateTag());
-                initToolBar(mPersonFragment.getTitle());
                 break;
             case R.id.project:
                 mProjectFragment = getBaseFragment(ProjectFragment.class);
                 showFragment(mProjectFragment.getPrivateTag());
-                initToolBar(mProjectFragment.getTitle());
                 break;
             case R.id.requirement:
                 mRequirementFragment = getBaseFragment(RequirementFragment.class);
                 showFragment(mRequirementFragment.getPrivateTag());
-                initToolBar(mRequirementFragment.getTitle());
                 break;
         }
     }
@@ -123,24 +112,27 @@ public class HomeActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
+            String title = "";
             if (mWeekPortListFragment != null && mShowFragmentTag.equals(mWeekPortListFragment.getPrivateTag())) {
                 getMenuInflater().inflate(R.menu.home_weekport, menu);
-                initToolBar(mWeekPortListFragment.getTitle());
+                title = mWeekPortListFragment.getTitle();
             } else if (mProjectFragment != null && mShowFragmentTag.equals(mProjectFragment.getPrivateTag())) {
                 getMenuInflater().inflate(R.menu.home_project, menu);
-                initToolBar(mProjectFragment.getTitle());
+                title = mProjectFragment.getTitle();
             } else if (mRequirementFragment != null && mShowFragmentTag.equals(mRequirementFragment.getPrivateTag())) {
                 getMenuInflater().inflate(R.menu.home_requirement, menu);
-                initToolBar(mRequirementFragment.getTitle());
+                title = mRequirementFragment.getTitle();
             } else if (mPersonFragment != null && mShowFragmentTag.equals(mPersonFragment.getPrivateTag())) {
                 getMenuInflater().inflate(R.menu.home_person, menu);
-                initToolBar(mPersonFragment.getTitle());
-            } else {
-                initToolBar();
+                title = mPersonFragment.getTitle();
             }
-            return true;
+            toolBar.setLogo(null);
+            toolBar.setTitle(title);
+        } else {
+            toolBar.setLogo(R.drawable.logo);
+            toolBar.setTitle("");
         }
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
