@@ -1,27 +1,27 @@
-<LinearLayout
+<!-- TODO: Update blank fragment layout -->
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/dimen_padding">
+    tools:context="com.example.mokey.weekport.ui.fragment.ProjectFragment">
 
-    <android.support.design.widget.TextInputLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:errorEnabled="false">
+        android:src="@drawable/ic_action_plus"
+        app:borderWidth="0dp"
+        app:elevation="@dimen/dimen_elevation"
+        app:layout_anchor="@+id/recyclerView"
+        app:layout_anchorGravity="bottom|right"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:paddingEnd="@dimen/dimen_padding"/>
+</android.support.design.widget.CoordinatorLayout>
 
-        <EditText
-            android:id="@+id/filePath"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/filePath"
-            android:paddingBottom="12dp"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:id="@+id/importFile"
-        android:text="@string/importFile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>

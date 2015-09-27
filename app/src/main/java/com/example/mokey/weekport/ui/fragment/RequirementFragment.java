@@ -1,8 +1,8 @@
 package com.example.mokey.weekport.ui.fragment;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +18,7 @@ import com.example.mokey.weekport.ui.core.BaseFragment;
 public class RequirementFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM_TITLE = "arg_param_title";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
@@ -38,7 +38,7 @@ public class RequirementFragment extends BaseFragment {
     public static RequirementFragment newInstance(String param1, String param2) {
         RequirementFragment fragment = new RequirementFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM_TITLE, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
@@ -52,7 +52,7 @@ public class RequirementFragment extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            setTitle(getArguments().getString(ARG_PARAM_TITLE));
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -65,4 +65,7 @@ public class RequirementFragment extends BaseFragment {
     }
 
 
+    public void importRequirementFile() {
+
+    }
 }

@@ -9,19 +9,40 @@ import android.os.Parcelable;
 
 import com.example.mokey.weekport.data.XmlFieldName;
 import com.example.mokey.weekport.data.XmlRootName;
+import com.example.mokey.weekport.db.annotation.Column;
+import com.example.mokey.weekport.db.annotation.Foreign;
+import com.example.mokey.weekport.db.annotation.Id;
+import com.example.mokey.weekport.db.annotation.Table;
 
 /**
  * Created by mokey on 15-9-6.
  */
 @XmlRootName(rootName = "proj")
+@Table(name = "tb_proj")
 public class Proj implements Parcelable {
-    @XmlFieldName(fieldName = "proj-id") private String projId;//
-    @XmlFieldName(fieldName = "proj-name") private String projName;//中国银行卡部APPS开发中银开放平台
-    @XmlFieldName(fieldName = "start-date") private String startDate;//
-    @XmlFieldName(fieldName = "start-time") private String startTime;//
-    @XmlFieldName(fieldName = "proj-type") private String projType;//
-    @XmlFieldName(fieldName = "luodi-flag") private String luodiFlag;//
-    @XmlFieldName(fieldName = "work-type") private String workType;//
+    @Id(column = "_id")
+    private Integer pId;
+    @Foreign(column = "projectId", foreign = "_id")
+    private ProjectRoot projectRoot;
+    @Column(column = "projId") @XmlFieldName(fieldName = "proj-id") private String projId;//
+    @Column(column = "projName") @XmlFieldName(fieldName = "proj-name")
+    private String projName;//中国银行卡部APPS开发中银开放平台
+    @Column(column = "startDate") @XmlFieldName(fieldName = "start-date")
+    private String startDate;//
+    @Column(column = "startTime") @XmlFieldName(fieldName = "start-time")
+    private String startTime;//
+    @Column(column = "projType") @XmlFieldName(fieldName = "proj-type") private String projType;//
+    @Column(column = "luodiFlag") @XmlFieldName(fieldName = "luodi-flag")
+    private String luodiFlag;//
+    @Column(column = "workType") @XmlFieldName(fieldName = "work-type") private String workType;//
+
+    public Integer getpId() {
+        return pId;
+    }
+
+    public void setpId(Integer pId) {
+        this.pId = pId;
+    }
 
     public String getProjId() {
         return projId;
@@ -79,12 +100,24 @@ public class Proj implements Parcelable {
         this.workType = workType;
     }
 
+    public ProjectRoot getProjectRoot() {
+        return projectRoot;
+    }
+
+    public void setProjectRoot(ProjectRoot projectRoot) {
+        this.projectRoot = projectRoot;
+    }
+
+    public Proj() {
+    }
 
     @Override public int describeContents() {
         return 0;
     }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.pId);
+        dest.writeParcelable(this.projectRoot, 0);
         dest.writeString(this.projId);
         dest.writeString(this.projName);
         dest.writeString(this.startDate);
@@ -94,10 +127,9 @@ public class Proj implements Parcelable {
         dest.writeString(this.workType);
     }
 
-    public Proj() {
-    }
-
     protected Proj(Parcel in) {
+        this.pId = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.projectRoot = in.readParcelable(ProjectRoot.class.getClassLoader());
         this.projId = in.readString();
         this.projName = in.readString();
         this.startDate = in.readString();
@@ -107,7 +139,7 @@ public class Proj implements Parcelable {
         this.workType = in.readString();
     }
 
-    public static final Parcelable.Creator<Proj> CREATOR = new Parcelable.Creator<Proj>() {
+    public static final Creator<Proj> CREATOR = new Creator<Proj>() {
         public Proj createFromParcel(Parcel source) {
             return new Proj(source);
         }

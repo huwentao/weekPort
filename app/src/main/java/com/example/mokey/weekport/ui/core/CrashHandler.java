@@ -8,20 +8,25 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Properties;
+import java.util.TimeZone;
 import java.util.TreeSet;
+
+import hirondelle.date4j.DateTime;
+import okio.BufferedSink;
+import okio.Okio;
 
 /**
  * TeacherApp
@@ -141,9 +146,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         // 收集设备信息
         collectCrashDeviceInfo(mContext);
         // 保存错误报告文件
-        String crashFileName = saveCrashInfoToFile(ex);
+        try {
+            String crashFileName = saveCrashInfoToFile(ex);
+            sendCrashReportsToServer(mContext);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // 发送错误报告到服务器
-        sendCrashReportsToServer(mContext);
         return true;
     }
 
@@ -200,36 +209,31 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
      * @param ex
      * @return
      */
-    private String saveCrashInfoToFile(Throwable ex) {
-        Writer info = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(info);
-        // printStackTrace(PrintWriter s)
-        // 将此 throwable 及其追踪输出到指定的 PrintWriter
-        ex.printStackTrace(printWriter);
-
-        // getCause() 返回此 throwable 的 cause；如果 cause 不存在或未知，则返回 null。
-        Throwable cause = ex.getCause();
-        while (cause != null) {
-            cause.printStackTrace(printWriter);
-            cause = cause.getCause();
-        }
-
-        // toString() 以字符串的形式返回该缓冲区的当前值。
-        String result = info.toString();
-        printWriter.close();
-        mDeviceCrashInfo.put(STACK_TRACE, result);
-
-        try {
-            long timestamp = System.currentTimeMillis();
-            String fileName = "crash-" + timestamp + CRASH_REPORTER_EXTENSION;
-            // 保存文件
-            FileOutputStream trace = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
-            mDeviceCrashInfo.store(trace, "");
-            trace.flush();
-            trace.close();
-            return fileName;
-        } catch (Exception e) {
-            Log.e(TAG, "an error occured while writing report file...", e);
+    private String saveCrashInfoToFile(Throwable ex) throws IOException {
+        String storageState = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(storageState)) {
+            File logDrectory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/weekport/log/");
+            if (logDrectory.exists() || logDrectory.mkdirs()) {
+            }
+            DateTime dateTime = DateTime.now(TimeZone.getDefault());
+            File logFile = new File(logDrectory.getAbsolutePath() + "/" + dateTime.format("YYYYMMDD_error.log"));
+            if (logFile.exists() || logFile.createNewFile()) {
+            }
+            BufferedSink bufferedSink = Okio.buffer(Okio.appendingSink(logFile));
+            StringBuilder builder = new StringBuilder(">>>>>>>>>>>>>>>>>>>>>>>>>>>"
+                    + dateTime.format("YYYY/MM/DD hh:mm:ss")
+                    + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+            for (Map.Entry<Object, Object> objectEntry : mDeviceCrashInfo.entrySet()) {
+                builder.append("\n" + objectEntry.getKey() + "=" + objectEntry.getValue());
+            }
+            bufferedSink.writeString(builder.append("\n").toString(), java.nio.charset.Charset.forName("utf-8"));
+            PrintWriter printWriter = null;
+            ex.printStackTrace(printWriter = new PrintWriter(bufferedSink.outputStream()));
+            bufferedSink.flush();
+            printWriter.flush();
+            printWriter.close();
+            bufferedSink.close();
+            return logFile.getAbsolutePath();
         }
         return null;
     }

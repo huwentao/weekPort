@@ -54,7 +54,19 @@ public class BaseActivity extends AppCompatActivity {
      * @param aClass
      */
     public void callMe(Class<? extends BaseActivity> aClass) {
+        callMe(aClass, null);
+    }
+
+    /**
+     * 页面跳转
+     *
+     * @param aClass
+     */
+    public void callMe(Class<? extends BaseActivity> aClass, Bundle bundle) {
         Intent intent = new Intent(this, aClass);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
         startActivity(intent);
     }
 

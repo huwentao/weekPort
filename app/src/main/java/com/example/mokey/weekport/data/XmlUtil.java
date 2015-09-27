@@ -1,6 +1,12 @@
 package com.example.mokey.weekport.data;
 
+import android.content.Context;
+import android.os.Environment;
 import android.util.Xml;
+
+import com.example.mokey.weekport.data.project.ProjectRoot;
+import com.example.mokey.weekport.db.DbUtils;
+import com.example.mokey.weekport.db.exception.DbException;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -16,8 +22,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
+import hirondelle.date4j.DateTime;
 import okio.BufferedSink;
+import okio.BufferedSource;
 import okio.Okio;
 
 /**
@@ -25,9 +34,12 @@ import okio.Okio;
  * Created by mokey on 15-9-6.
  */
 public class XmlUtil {
-    private static XmlUtil xmlUtil = new XmlUtil();
+    private static XmlUtil xmlUtil = null;
+    private String xmlDirectory = "/weekport/requirement/";
+    private String xmlrequrementFileName = "requrement.xml";
 
     private XmlUtil() {
+
     }
 
     public static XmlUtil getInstance() {
@@ -35,6 +47,59 @@ public class XmlUtil {
             xmlUtil = new XmlUtil();
         }
         return xmlUtil;
+    }
+
+    /**
+     * @return
+     */
+    public List<File> getRequirementFileList() {
+        String storageState = Environment.getExternalStorageState();
+        if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + xmlDirectory);
+            if (file.exists())
+                return Arrays.asList(file.listFiles());
+        }
+        return null;
+    }
+
+    /**
+     * @param context
+     * @param dbUtils
+     * @param requirementFileName
+     * @throws IOException
+     * @throws IllegalAccessException
+     * @throws XmlPullParserException
+     * @throws InstantiationException
+     * @throws DbException
+     */
+    public void initXmlFile(Context context, DbUtils dbUtils, String requirementFileName)
+            throws IOException,
+            IllegalAccessException,
+            XmlPullParserException,
+            InstantiationException,
+            DbException {
+        String storageState = Environment.getExternalStorageState();
+        if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + xmlDirectory);
+            File requirement = new File(file.getAbsolutePath() + "/" + requirementFileName);
+            if (file.exists() || file.mkdirs()) {
+            }
+
+            if (requirement.exists() || requirement.createNewFile()) {
+                InputStream inputStream = context.getAssets().open(xmlrequrementFileName);
+                BufferedSource bufferedSource = Okio.buffer(Okio.source(inputStream));
+                BufferedSink bufferedSink = Okio.buffer(Okio.sink(requirement));
+                bufferedSink.writeAll(bufferedSource);
+                bufferedSink.flush();
+                bufferedSink.close();
+                bufferedSource.close();
+            }
+
+            ProjectRoot projectRoot = parseXMLToObject(ProjectRoot.class, requirement);
+            DateTime dateTime = DateTime.now(TimeZone.getDefault());
+            projectRoot.setCreateTime(dateTime.format("YYYY-MM-DD hh:mm:ss"));
+            dbUtils.saveOrUpdate(projectRoot);
+        }
     }
 
     /**

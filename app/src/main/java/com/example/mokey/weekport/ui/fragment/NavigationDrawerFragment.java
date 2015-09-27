@@ -36,7 +36,8 @@ public class NavigationDrawerFragment extends BaseFragment {
      */
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
-    /**container
+    /**
+     * container
      * A pointer to the current callbacks instance (the Activity).
      */
     private NavigationDrawerCallbacks mCallbacks;
@@ -84,6 +85,7 @@ public class NavigationDrawerFragment extends BaseFragment {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
                         mCallbacks.onNavigationDrawerItemSelected(menuItem.getItemId());
+                        mDrawerLayout.closeDrawer(mFragmentContainerView);
                         return true;
                     }
                 });
@@ -223,7 +225,7 @@ public class NavigationDrawerFragment extends BaseFragment {
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */
-    public static interface NavigationDrawerCallbacks {
+    public interface NavigationDrawerCallbacks {
         /**
          * Called when an item in the navigation drawer is selected.
          */

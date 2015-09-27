@@ -66,7 +66,7 @@ public class ApplicationTest extends ApplicationTestCase<WeekPortApplication> {
             if (!file.exists()) {
                 boolean flag = file.createNewFile();
                 if (flag) {
-                    BufferedSource from = Okio.buffer(Okio.source(getApplication().getAssets().open("open20150812.xml")));
+                    BufferedSource from = Okio.buffer(Okio.source(getApplication().getAssets().open("requrement.xml")));
                     BufferedSink to = Okio.buffer(Okio.sink(file));
                     to.writeAll(from);
                     to.flush();
@@ -214,5 +214,19 @@ public class ApplicationTest extends ApplicationTestCase<WeekPortApplication> {
 
     public class TestClass {
         private List<Task> tasks = new ArrayList<>();
+    }
+
+    public void testDate() {
+        String dates = "2015-08-24";
+        String dates2 = "2015-08-24";
+        DateTime dateTime = new DateTime(dates);
+        DateTime dateTime2 = new DateTime(dates2);
+        boolean flag = dateTime.gt(dateTime2);
+        assertEquals(false, flag);
+        flag = dateTime.equals(dateTime2);
+        assertEquals(true, flag);
+        assertEquals("2015",String.valueOf(dateTime.getYear()));
+        assertEquals("08",String.valueOf(dateTime.getMonth()));
+        assertEquals("24",String.valueOf(dateTime.getNumDaysInMonth()));
     }
 }

@@ -18,17 +18,25 @@ package com.example.mokey.weekport.db;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.text.TextUtils;
-import com.example.mokey.weekport.db.sqlite.*;
+
+import com.example.mokey.weekport.db.exception.DbException;
+import com.example.mokey.weekport.db.sqlite.CursorUtils;
+import com.example.mokey.weekport.db.sqlite.DbModelSelector;
+import com.example.mokey.weekport.db.sqlite.Selector;
+import com.example.mokey.weekport.db.sqlite.SqlInfo;
+import com.example.mokey.weekport.db.sqlite.SqlInfoBuilder;
+import com.example.mokey.weekport.db.sqlite.WhereBuilder;
 import com.example.mokey.weekport.db.table.DbModel;
 import com.example.mokey.weekport.db.table.Id;
 import com.example.mokey.weekport.db.table.Table;
 import com.example.mokey.weekport.db.table.TableUtils;
-import com.example.mokey.weekport.db.exception.DbException;
 import com.example.mokey.weekport.db.util.IOUtils;
 import com.example.mokey.weekport.db.util.LogUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -310,7 +318,8 @@ public class DbUtils {
     }
 
     public void deleteAll(List<?> entities) throws DbException {
-        if (entities == null || entities.size() == 0 || !tableIsExist(entities.get(0).getClass())) return;
+        if (entities == null || entities.size() == 0 || !tableIsExist(entities.get(0).getClass()))
+            return;
         try {
             beginTransaction();
 
@@ -355,7 +364,8 @@ public class DbUtils {
     }
 
     public void updateAll(List<?> entities, String... updateColumnNames) throws DbException {
-        if (entities == null || entities.size() == 0 || !tableIsExist(entities.get(0).getClass())) return;
+        if (entities == null || entities.size() == 0 || !tableIsExist(entities.get(0).getClass()))
+            return;
         try {
             beginTransaction();
 
@@ -370,7 +380,8 @@ public class DbUtils {
     }
 
     public void updateAll(List<?> entities, WhereBuilder whereBuilder, String... updateColumnNames) throws DbException {
-        if (entities == null || entities.size() == 0 || !tableIsExist(entities.get(0).getClass())) return;
+        if (entities == null || entities.size() == 0 || !tableIsExist(entities.get(0).getClass()))
+            return;
         try {
             beginTransaction();
 
@@ -635,14 +646,21 @@ public class DbUtils {
         SQLiteDatabase result = null;
 
         String dbDir = config.getDbDir();
-        if (!TextUtils.isEmpty(dbDir)) {
-            File dir = new File(dbDir);
-            if (dir.exists() || dir.mkdirs()) {
-                File dbFile = new File(dbDir, config.getDbName());
+        String storageState = Environment.getExternalStorageState();
+        if (!TextUtils.isEmpty(dbDir) && storageState.equals(Environment.MEDIA_MOUNTED)) {
+            File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + dbDir);
+            if (!dir.exists() || dir.mkdirs()) {
+            }
+            File dbFile = new File(dir, config.getDbName());
+            try {
+                if (!dbFile.exists() || dbFile.createNewFile()) {
+                }
                 result = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         } else {
-            result = config.getContext().openOrCreateDatabase(config.getDbName(), 0, null);
+            result = config.getContext().openOrCreateDatabase(config.getDbName(), Context.MODE_PRIVATE, null);
         }
         return result;
     }
