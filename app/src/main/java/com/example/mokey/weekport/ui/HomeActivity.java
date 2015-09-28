@@ -1,5 +1,6 @@
 package com.example.mokey.weekport.ui;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -21,6 +22,7 @@ import com.example.mokey.weekport.ui.fragment.ProjectListFragment;
 import com.example.mokey.weekport.ui.fragment.RequirementFragment;
 import com.example.mokey.weekport.ui.fragment.WeekPortFragment;
 import com.example.mokey.weekport.ui.fragment.WeekPortListFragment;
+import com.example.mokey.weekport.util.DialogUtil;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -64,6 +66,7 @@ public class HomeActivity extends BaseActivity
         initToolBar(null);
 
         mCurrentUser = getIntent().getParcelableExtra(MainActivity.CURRENT_USER);
+        if (mCurrentUser == null) mCurrentUser = new User();
 
         mFragmentManager = getSupportFragmentManager();
         mNavigationDrawerFragment = (NavigationDrawerFragment) mFragmentManager
@@ -157,7 +160,7 @@ public class HomeActivity extends BaseActivity
                 mWeekPortListFragment.loadWeekProtByDate(mChoiseTodayDate);
                 break;
             case R.id.importProjectFile:
-                mProjectFragment.importProjectFile();
+                importProjectFile();
                 break;
             case R.id.importRequirementFile:
                 mRequirementFragment.importRequirementFile();
@@ -167,6 +170,9 @@ public class HomeActivity extends BaseActivity
                 break;
             case R.id.saveWeekport:
                 mWeekPortListFragment.saveWeekPort();
+                break;
+            case R.id.personPlus:
+                mPersonFragment.newPerson();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -197,7 +203,7 @@ public class HomeActivity extends BaseActivity
             return aClass.cast(mPersonFragment);
         } else if (aClass.isAssignableFrom(ProjectFragment.class)) {
             if (mProjectFragment == null) {
-                mProjectFragment = ProjectFragment.newInstance(getString(R.string.projectInfo), null);
+                mProjectFragment = ProjectFragment.newInstance(getString(R.string.projectInfo), mCurrentUser);
                 baseFragments.put(mProjectFragment.getPrivateTag(), mProjectFragment);
                 transaction.add(R.id.contentContainer, mProjectFragment, mProjectFragment.getPrivateTag());
                 transaction.commit();
@@ -271,5 +277,23 @@ public class HomeActivity extends BaseActivity
         getBaseFragment(tClass, bundle);
     }
 
+    /**
+     * 导入最新项目数据
+     */
+    public void importProjectFile() {
+        DialogUtil.getAlertDialog(this, R.string.tip_title, "导入最新项目数据",
+                "确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        mProjectFragment.importProjectFile();
+                    }
+                }, "取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
 
+    }
 }

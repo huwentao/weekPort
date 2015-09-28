@@ -3,7 +3,7 @@ package com.example.mokey.weekport;
 import android.os.Environment;
 import android.test.ApplicationTestCase;
 
-import com.example.mokey.weekport.data.XmlUtil;
+import com.example.mokey.weekport.data.annotation.XmlUtil;
 import com.example.mokey.weekport.data.project.ProjectRoot;
 import com.example.mokey.weekport.data.weekly.Task;
 import com.example.mokey.weekport.data.weekly.WeeklyRoot;

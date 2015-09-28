@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.mokey.weekport.R;
 import com.example.mokey.weekport.data.project.Proj;
+import com.example.mokey.weekport.data.user.UserProject;
 import com.example.mokey.weekport.ui.adapter.ProjectAdapter;
 import com.example.mokey.weekport.ui.core.BaseFragment;
 import com.example.mokey.weekport.util.SnackBarUtils;
@@ -38,7 +39,7 @@ public class RequirementFragment extends BaseFragment {
     private String mParam1;
     private String mParam2;
     private ProjectAdapter mProjectAdapter;
-    private List<Proj> mProjList = new ArrayList<>();
+    private List<UserProject> mProjList = new ArrayList<>();
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     @Bind(R.id.coordinatorLayout) CoordinatorLayout coordinatorLayout;
@@ -89,7 +90,7 @@ public class RequirementFragment extends BaseFragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(mProjectAdapter = new ProjectAdapter(mProjList,
                 new ProjectAdapter.OnItemClickListener() {
-                    @Override public void onItemClick(int position, Proj proj) {
+                    @Override public void onItemClick(int position, UserProject proj) {
 
                     }
                 }, new ProjectAdapter.NodataListener() {

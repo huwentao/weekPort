@@ -21,7 +21,7 @@ public class ProjectListActivity extends BaseActivity {
         setContentView(R.layout.activity_project_list);
         mFragmentManger = getSupportFragmentManager();
         FragmentTransaction transaction = mFragmentManger.beginTransaction();
-        mProjectListFragment = ProjectListFragment.newInstance(null, null);
+        mProjectListFragment = ProjectListFragment.newInstance(getIntent().getExtras(), null);
         transaction.add(R.id.contentContainer, mProjectListFragment, mProjectListFragment.getPrivateTag());
         transaction.commit();
     }
@@ -44,4 +44,5 @@ public class ProjectListActivity extends BaseActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -8,6 +8,7 @@ import com.example.mokey.weekport.db.annotation.Column;
 import com.example.mokey.weekport.db.annotation.Foreign;
 import com.example.mokey.weekport.db.annotation.Id;
 import com.example.mokey.weekport.db.annotation.Table;
+import com.example.mokey.weekport.db.annotation.Unique;
 
 /**
  * Created by mokey on 15-9-27.
@@ -18,8 +19,8 @@ public class UserProject implements Parcelable {
     private Integer userProjectId;
     @Foreign(column = "user_id", foreign = "_id")
     private User user;
-    @Column(column = "pId") private Integer pId;//
-    @Column(column = "projId") private String projId;//
+    @Unique @Column(column = "pId") private Integer pId;//
+    @Unique @Column(column = "projId") private String projId;//
     @Column(column = "projName") private String projName;//中国银行卡部APPS开发中银开放平台
     @Column(column = "startDate") private String startDate;//
     @Column(column = "startTime") private String startTime;//
@@ -27,9 +28,8 @@ public class UserProject implements Parcelable {
     @Column(column = "luodiFlag") private String luodiFlag;//
     @Column(column = "workType") private String workType;//
 
-    public UserProject(Integer userProjectId, User user, Proj proj) {
+    public UserProject(User user, Proj proj) {
         this.user = user;
-        this.userProjectId = userProjectId;
         this.pId = proj.getpId();
         this.projId = proj.getProjId();
         this.projName = proj.getProjName();

@@ -7,10 +7,9 @@ package com.example.mokey.weekport.data.project;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.mokey.weekport.data.XmlFieldName;
-import com.example.mokey.weekport.data.XmlRootName;
+import com.example.mokey.weekport.data.annotation.XmlFieldName;
+import com.example.mokey.weekport.data.annotation.XmlRootName;
 import com.example.mokey.weekport.db.annotation.Column;
-import com.example.mokey.weekport.db.annotation.Foreign;
 import com.example.mokey.weekport.db.annotation.Id;
 import com.example.mokey.weekport.db.annotation.Table;
 
@@ -22,8 +21,8 @@ import com.example.mokey.weekport.db.annotation.Table;
 public class Proj implements Parcelable {
     @Id(column = "_id")
     private Integer pId;
-    @Foreign(column = "projectId", foreign = "_id")
-    private ProjectRoot projectRoot;
+    @Column(column = "projectId")
+    private Integer projectId;
     @Column(column = "projId") @XmlFieldName(fieldName = "proj-id") private String projId;//
     @Column(column = "projName") @XmlFieldName(fieldName = "proj-name")
     private String projName;//中国银行卡部APPS开发中银开放平台
@@ -100,12 +99,12 @@ public class Proj implements Parcelable {
         this.workType = workType;
     }
 
-    public ProjectRoot getProjectRoot() {
-        return projectRoot;
+    public Integer getProjectId() {
+        return projectId;
     }
 
-    public void setProjectRoot(ProjectRoot projectRoot) {
-        this.projectRoot = projectRoot;
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 
     public Proj() {
@@ -117,7 +116,7 @@ public class Proj implements Parcelable {
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.pId);
-        dest.writeParcelable(this.projectRoot, 0);
+        dest.writeValue(this.projectId);
         dest.writeString(this.projId);
         dest.writeString(this.projName);
         dest.writeString(this.startDate);
@@ -129,7 +128,7 @@ public class Proj implements Parcelable {
 
     protected Proj(Parcel in) {
         this.pId = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.projectRoot = in.readParcelable(ProjectRoot.class.getClassLoader());
+        this.projectId = (Integer) in.readValue(Integer.class.getClassLoader());
         this.projId = in.readString();
         this.projName = in.readString();
         this.startDate = in.readString();

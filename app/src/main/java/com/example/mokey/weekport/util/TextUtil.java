@@ -23,11 +23,13 @@ public class TextUtil {
      * @param text
      */
     public static void setText(TextView textView, String placeText, Object... text) {
-        if (placeText != null) {
-            placeText = MessageFormat.format(placeText, text);
-            textView.setText(placeText);
-        } else if (text != null && text.length == 1) {
-            textView.setText(TextUtils.isEmpty(text[0].toString()) ? "" : text[0].toString());
+        if (textView != null) {
+            if (placeText != null) {
+                placeText = MessageFormat.format(placeText, text);
+                textView.setText(placeText);
+            } else if (text != null && text.length == 1) {
+                textView.setText(TextUtils.isEmpty((String) text[0]) ? "" : (String) text[0]);
+            }
         }
     }
 

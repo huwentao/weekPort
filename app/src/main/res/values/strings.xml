@@ -30,7 +30,7 @@
     <string name="filePath">周报文件位置</string>
     <string name="myWeekPort">我的周报</string>
     <string name="calendar">日期</string>
-    <string name="importFile">导入</string>
+    <string name="importProjectFile">导入项目数据</string>
     <string name="projectName">项目名称</string>
     <string name="requirementNo">需求编号</string>
     <string name="taskContent">任务</string>
@@ -52,4 +52,6 @@
     <string name="title_activity_project_list">选择参与项目</string>
     <string name="searchTitle">搜索</string>
     <string name="loadMore">数据加载中，请稍后</string>
+    <string name="personPlus">添加</string>
+    <string name="importRequirementFile">导入需求数据</string>
 </resources>

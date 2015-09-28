@@ -3,7 +3,7 @@ package com.example.mokey.weekport.task;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.example.mokey.weekport.data.XmlUtil;
+import com.example.mokey.weekport.data.annotation.XmlUtil;
 import com.example.mokey.weekport.data.project.ProjectRoot;
 import com.example.mokey.weekport.db.DbUtils;
 import com.example.mokey.weekport.db.exception.DbException;

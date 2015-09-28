@@ -59,6 +59,7 @@
 
     <style name="mProgress_circle" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:indeterminateDrawable">@drawable/progressbar_circle</item>
+        <item name="android:minWidth">270dp</item>
     </style>
 
 </resources>

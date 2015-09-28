@@ -1,4 +1,4 @@
-package com.example.mokey.weekport.data;
+package com.example.mokey.weekport.data.annotation;
 
 import com.example.mokey.weekport.data.project.Proj;
 import com.example.mokey.weekport.data.project.ProjectRoot;

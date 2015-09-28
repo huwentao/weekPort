@@ -3,9 +3,9 @@ package com.example.mokey.weekport.data.weekly;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.mokey.weekport.data.FieldType;
-import com.example.mokey.weekport.data.XmlFieldName;
-import com.example.mokey.weekport.data.XmlRootName;
+import com.example.mokey.weekport.data.annotation.FieldType;
+import com.example.mokey.weekport.data.annotation.XmlFieldName;
+import com.example.mokey.weekport.data.annotation.XmlRootName;
 import com.example.mokey.weekport.db.annotation.Column;
 import com.example.mokey.weekport.db.annotation.Id;
 import com.example.mokey.weekport.db.annotation.Table;

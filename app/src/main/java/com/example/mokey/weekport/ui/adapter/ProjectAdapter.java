@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.mokey.weekport.R;
-import com.example.mokey.weekport.data.project.Proj;
+import com.example.mokey.weekport.data.user.UserProject;
 import com.example.mokey.weekport.util.TextUtil;
 
 import java.util.ArrayList;
@@ -22,18 +22,14 @@ import butterknife.ButterKnife;
 public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int NODATA_TYPE = 0;
     private static final int PROJLIST_TYPE = 1;
-    private List<Proj> projList = new ArrayList<>();
+    private List<UserProject> projList = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
     private NodataListener nodataListener;
 
-    public ProjectAdapter(List<Proj> projList, OnItemClickListener onItemClickListener, NodataListener nodataListener) {
+    public ProjectAdapter(List<UserProject> projList, OnItemClickListener onItemClickListener, NodataListener nodataListener) {
         this.projList = projList;
         this.onItemClickListener = onItemClickListener;
         this.nodataListener = nodataListener;
-    }
-
-    public ProjectAdapter(List<Proj> projList) {
-        this.projList = projList;
     }
 
     @Override
@@ -50,10 +46,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == PROJLIST_TYPE) {
             ProjectItemView projectItemView = (ProjectItemView) holder;
-            Proj proj = projList.get(position);
-            TextUtil.setText(projectItemView.projectCode, String.valueOf(position));
+            UserProject proj = projList.get(position);
+            TextUtil.setText(projectItemView.seqText, String.valueOf(position + 1));
             TextUtil.setText(projectItemView.projectCode, proj.getProjId());
-            TextUtil.setText(projectItemView.projectCode, proj.getProjName());
+            TextUtil.setText(projectItemView.projectName, proj.getProjName());
             projectItemView.setOnItemClickListener(position, proj);
         } else {
             NoDataView noDataView = (NoDataView) holder;
@@ -83,7 +79,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             ButterKnife.bind(this, itemView);
         }
 
-        public void setOnItemClickListener(final int position, final Proj proj) {
+        public void setOnItemClickListener(final int position, final UserProject proj) {
             if (onItemClickListener != null) {
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
@@ -111,7 +107,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public interface OnItemClickListener {
-        public void onItemClick(int position, Proj proj);
+        public void onItemClick(int position, UserProject proj);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

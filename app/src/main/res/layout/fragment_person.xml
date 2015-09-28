@@ -64,6 +64,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/filePath"
+            android:lines="2"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:paddingBottom="@dimen/dimen_text_padding"/>
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>

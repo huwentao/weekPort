@@ -5,7 +5,6 @@
       tools:context="com.example.mokey.weekport.ui.HomeActivity">
     <item
         android:id="@+id/importProjectFile"
-        android:icon="@drawable/ic_action_import"
-        android:title="@string/importFile"
+        android:title="@string/importProjectFile"
         app:showAsAction="withText|ifRoom"/>
 </menu>

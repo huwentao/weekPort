@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.mokey.weekport.R;
-import com.example.mokey.weekport.data.XmlUtil;
+import com.example.mokey.weekport.data.annotation.XmlUtil;
 import com.example.mokey.weekport.data.user.User;
 import com.example.mokey.weekport.db.exception.DbException;
 import com.example.mokey.weekport.ui.core.BaseFragment;
@@ -43,6 +43,7 @@ public class PersonFragment extends BaseFragment {
     @Bind(R.id.filePath) EditText filePath;
     private File mWeekPortDirecoty;
     private Logger logger = LoggerFactory.getLogger(PersonFragment.class);
+    private boolean isNewPerson = false;
 
     /**
      * Use this factory method to create a new instance of
@@ -98,6 +99,7 @@ public class PersonFragment extends BaseFragment {
     }
 
     public void savePerson() {
+        if (isNewPerson) mUser = new User();
         mUser.setReportPerson(userName.getText().toString());
         mUser.setIdNo(IDNum.getText().toString());
         filePath.setInputType(InputType.TYPE_NULL);
@@ -106,5 +108,11 @@ public class PersonFragment extends BaseFragment {
         } catch (DbException e) {
             logger.error(e.getMessage(), e);
         }
+    }
+
+    public void newPerson() {
+        isNewPerson = true;
+        TextUtil.setText(userName, null);
+        TextUtil.setText(IDNum, null);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.mokey.weekport.data;
+package com.example.mokey.weekport.data.annotation;
 
 import android.content.Context;
 import android.os.Environment;
@@ -116,7 +116,7 @@ public class XmlUtil {
             DateTime dateTime = DateTime.now(TimeZone.getDefault());
             projectRoot.setCreateTime(dateTime.format("YYYY-MM-DD hh:mm:ss"));
             for (Proj proj : projectRoot.getProjList()) {
-                proj.setProjectRoot(projectRoot);
+                proj.setProjectId(projectRoot.getProjectId());
             }
             dbUtils.saveOrUpdate(projectRoot);
         }

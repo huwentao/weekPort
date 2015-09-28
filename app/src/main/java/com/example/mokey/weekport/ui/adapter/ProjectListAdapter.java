@@ -28,12 +28,14 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private OnItemClickListener onItemClickListener;
     private NodataListener nodataListener;
     private OnLoadMoreListener onLoadMoreListener;
-    private boolean loadAllData = false;
+    private boolean isLoadMoreData = true;//显示加载更多
 
     public ProjectListAdapter(List<Proj> projList,
                               OnItemClickListener onItemClickListener,
                               NodataListener nodataListener) {
-        this.projList = projList;
+        if (projList != null) {
+            this.projList = projList;
+        }
         this.onItemClickListener = onItemClickListener;
         this.nodataListener = nodataListener;
     }
@@ -64,29 +66,29 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             TextUtil.setText(projectItemView.projectCode, proj.getProjId());
             TextUtil.setText(projectItemView.projectName, proj.getProjName());
             projectItemView.setOnItemClickListener(position, proj);
-        } else if (getItemViewType(position) == PROJLIST_TYPE) {
+        } else if (getItemViewType(position) == NODATA_TYPE) {
             NoDataView noDataView = (NoDataView) holder;
             TextUtil.setText(noDataView.noDataText, "空，前往添加项目");
-        }
-        if (getItemViewType(position) == LOADMORE_TYPE) {
-            if (onLoadMoreListener != null) {
-                onLoadMoreListener.loadMore();
+        } else if (getItemViewType(position) == LOADMORE_TYPE) {
+            if (!isLoadMoreData) {
+                holder.itemView.setVisibility(View.GONE);
+            } else {
+                holder.itemView.setVisibility(View.VISIBLE);
+                if (onLoadMoreListener != null) {
+                    onLoadMoreListener.loadMore();
+                }
             }
         }
     }
 
     @Override public int getItemCount() {
-        if (loadAllData) {
-            return projList.size() == 0 ? 1 : projList.size();
-        } else {
-            return projList.size() == 0 ? 1 : projList.size() + 1;
-        }
+        return projList.size() == 0 ? 1 : projList.size() + 1;
     }
 
     @Override public int getItemViewType(int position) {
         if (projList.size() == 0) {
             return NODATA_TYPE;
-        } else if (!loadAllData && position == projList.size()) {
+        } else if (position == projList.size()) {
             return LOADMORE_TYPE;
         } else {
             return PROJLIST_TYPE;
@@ -164,11 +166,17 @@ public class ProjectListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.onLoadMoreListener = onLoadMoreListener;
     }
 
-    public boolean isLoadAllData() {
-        return loadAllData;
+    public boolean isLoadMoreData() {
+        return isLoadMoreData;
     }
 
-    public void setLoadAllData(boolean loadAllData) {
-        this.loadAllData = loadAllData;
+    public void setLoadMoreData(boolean isLoadMoreData) {
+        this.isLoadMoreData = isLoadMoreData;
+    }
+
+    public void setProjList(List<Proj> projList) {
+        if (projList != null) {
+            this.projList = projList;
+        }
     }
 }

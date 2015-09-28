@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 
-import com.example.mokey.weekport.data.XmlUtil;
+import com.example.mokey.weekport.data.annotation.XmlUtil;
 import com.example.mokey.weekport.data.project.Proj;
 import com.example.mokey.weekport.data.project.ProjectRoot;
 import com.example.mokey.weekport.db.DbUtils;
@@ -95,7 +95,7 @@ public class ImportProjectFileTask extends AsyncTask<Integer, Integer, ProjectRo
             mDbUtils.deleteAll(ProjectRoot.class);
             mDbUtils.deleteAll(Proj.class);
             for (Proj proj : newProjectRoot.getProjList()) {
-                proj.setProjectRoot(newProjectRoot);
+                proj.setProjectId(newProjectRoot.getProjectId());
             }
             mDbUtils.saveOrUpdate(newProjectRoot);
         } catch (Exception e) {
