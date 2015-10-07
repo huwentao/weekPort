@@ -9,12 +9,23 @@ import java.text.MessageFormat;
  * Created by mokey on 15-9-27.
  */
 public class TextUtil {
+
+    /**
+     * @param textView  文本控件
+     * @param text      显示文字
+     * @param otherText 备用显示文字
+     */
+    public static void setText(TextView textView, String text, String otherText) {
+        text = TextUtils.isEmpty(text) ? otherText : text;
+        setText(textView, text);
+    }
+
     /**
      * @param textView
      * @param text
      */
     public static void setText(TextView textView, String text) {
-        setText(textView, null, text);
+        setText(textView, null, new String[]{text});
     }
 
     /**
@@ -22,7 +33,7 @@ public class TextUtil {
      * @param placeText 例: 姓名：{0}
      * @param text
      */
-    public static void setText(TextView textView, String placeText, Object... text) {
+    public static void setText(TextView textView, String placeText, Object[] text) {
         if (textView != null) {
             if (placeText != null) {
                 placeText = MessageFormat.format(placeText, text);

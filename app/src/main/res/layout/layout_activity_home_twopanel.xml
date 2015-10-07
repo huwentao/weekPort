@@ -22,7 +22,8 @@
 
         <android.widget.Space
             android:layout_width="10dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:background="@color/colorBlackLight"/>
 
         <FrameLayout
             android:id="@+id/contentContainer"

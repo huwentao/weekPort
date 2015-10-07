@@ -40,9 +40,9 @@ public class HomeActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     @Bind(R.id.toolBar) Toolbar toolBar;
 
-    private boolean isHaveTwo = false;
-    private boolean isHaveThree = false;
-    private boolean isHaveOne = false;
+    private boolean isHaveTwoPanel = false;
+    private boolean isHaveThreePanel = false;
+    private boolean isHaveOnePanel = false;
 
     private WeekPortFragment mWeekPortFragment;//
     private ProjectListFragment mProjectListFragment;//
@@ -72,16 +72,19 @@ public class HomeActivity extends BaseActivity
         mNavigationDrawerFragment = (NavigationDrawerFragment) mFragmentManager
                 .findFragmentById(R.id.navigation_drawer);
 
+        isHaveOnePanel = getResources().getBoolean(R.bool.isHaveOnePanel);
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                toolBar,
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        if (isHaveOnePanel) {
+            mNavigationDrawerFragment.setUp(
+                    toolBar,
+                    R.id.navigation_drawer,
+                    (DrawerLayout) findViewById(R.id.drawer_layout));
+        }
         mNavigationDrawerFragment.setCallbacks(this);
 
-        isHaveOne = getResources().getBoolean(R.bool.isHaveOnePanel);
-        isHaveTwo = getResources().getBoolean(R.bool.isHaveTwoPanel);
-        isHaveThree = getResources().getBoolean(R.bool.isHaveThreePanel);
+        isHaveOnePanel = getResources().getBoolean(R.bool.isHaveOnePanel);
+        isHaveTwoPanel = getResources().getBoolean(R.bool.isHaveTwoPanel);
+        isHaveThreePanel = getResources().getBoolean(R.bool.isHaveThreePanel);
 
         mChoiseTodayDate = DateTime.now(TimeZone.getDefault());
         mWeekPortListFragment = getBaseFragment(WeekPortListFragment.class);
@@ -224,19 +227,25 @@ public class HomeActivity extends BaseActivity
     private <T> void getBaseFragment(Class<T> tClass, Bundle bundle) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         if (tClass.isAssignableFrom(ProjectListFragment.class)) {
-            if (mProjectListFragment != null) {
+            if (mProjectListFragment == null) {
                 mProjectListFragment = ProjectListFragment.newInstance(bundle, null);
                 baseFragments.put(mProjectListFragment.getPrivateTag(), mProjectListFragment);
-                transaction.replace(R.id.contentDetailContainer, mProjectListFragment, mProjectListFragment.getPrivateTag());
-                transaction.commit();
+                transaction.add(R.id.contentDetailContainer, mProjectListFragment, mProjectListFragment.getPrivateTag());
             }
+            if (mWeekPortFragment != null)
+                transaction.hide(mWeekPortFragment);
+            transaction.show(mProjectListFragment);
+            transaction.commit();
         } else if (tClass.isAssignableFrom(WeekPortFragment.class)) {
-            if (mWeekPortFragment != null) {
+            if (mWeekPortFragment == null) {
                 mWeekPortFragment = WeekPortFragment.newInstance(bundle, mChoiseTodayDate);
                 baseFragments.put(mWeekPortFragment.getPrivateTag(), mWeekPortFragment);
-                transaction.replace(R.id.contentDetailContainer, mWeekPortFragment, mWeekPortFragment.getPrivateTag());
-                transaction.commit();
+                transaction.add(R.id.contentDetailContainer, mWeekPortFragment, mWeekPortFragment.getPrivateTag());
             }
+            if (mProjectListFragment != null)
+                transaction.hide(mProjectListFragment);
+            transaction.show(mWeekPortFragment);
+            transaction.commit();
         }
     }
 
@@ -269,7 +278,7 @@ public class HomeActivity extends BaseActivity
      * @return
      */
     public boolean isNeedNewActivity() {
-        return !isHaveThree;
+        return !isHaveThreePanel;
     }
 
 
@@ -295,5 +304,9 @@ public class HomeActivity extends BaseActivity
                     }
                 }).show();
 
+    }
+
+    public boolean isHaveOnePanel() {
+        return isHaveOnePanel;
     }
 }

@@ -24,16 +24,18 @@
 
         <android.widget.Space
             android:layout_width="10dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:background="@color/colorBlackLight"/>
 
         <FrameLayout
             android:id="@+id/contentContainer"
-            android:layout_width="300dp"
+            android:layout_width="320dp"
             android:layout_height="match_parent"/>
 
         <android.widget.Space
             android:layout_width="10dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:background="@color/colorBlackLight"/>
 
         <FrameLayout
             android:id="@+id/contentDetailContainer"

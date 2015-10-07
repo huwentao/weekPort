@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mokey.weekport.R;
+import com.example.mokey.weekport.ui.HomeActivity;
 import com.example.mokey.weekport.ui.core.BaseFragment;
 
 /**
@@ -81,11 +82,16 @@ public class NavigationDrawerFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         mNavigationView = (NavigationView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+
         mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override public boolean onNavigationItemSelected(MenuItem menuItem) {
                         mCallbacks.onNavigationDrawerItemSelected(menuItem.getItemId());
-                        mDrawerLayout.closeDrawer(mFragmentContainerView);
+                        if (((HomeActivity) getActivity()).isHaveOnePanel()) {
+                            mDrawerLayout.closeDrawer(mFragmentContainerView);
+                        }else{
+                            getActivity().supportInvalidateOptionsMenu();
+                        }
                         return true;
                     }
                 });

@@ -4,13 +4,19 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.mokey.weekport.R;
+import com.example.mokey.weekport.data.weekly.WeeklyRoot;
+import com.example.mokey.weekport.db.exception.DbException;
+import com.example.mokey.weekport.db.sqlite.Selector;
 import com.example.mokey.weekport.ui.adapter.WeekPortListAdapter;
 import com.example.mokey.weekport.ui.core.BaseFragment;
+
+import java.util.TimeZone;
 
 import butterknife.Bind;
 import hirondelle.date4j.DateTime;
@@ -28,16 +34,17 @@ public class WeekPortListFragment extends BaseFragment {
     private static final String ARG_PARAM_CHOISEDATE = "arg_param_choisedate";
 
     // TODO: Rename and change types of parameters
-    private String mChoiseDate;
+    private DateTime mChoiseDate;
     private WeekPortListAdapter mWeekPortListAdapter;
+    private WeeklyRoot mWeeklyRoot = null;
 
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param choiseDate      Parameter 2.
-     * @param title       Parameter 1.
+     * @param choiseDate Parameter 2.
+     * @param title      Parameter 1.
      * @param choiseDate
      * @return A new instance of fragment WeekPortListFragment.
      */
@@ -60,7 +67,9 @@ public class WeekPortListFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             setTitle(getArguments().getString(ARG_PARAM_TITLE));
-            mChoiseDate = getArguments().getString(ARG_PARAM_CHOISEDATE);
+            String choiseDateStr = getArguments().getString(ARG_PARAM_CHOISEDATE);
+            if (!TextUtils.isEmpty(choiseDateStr))
+                mChoiseDate = new DateTime(choiseDateStr);
         }
     }
 
@@ -79,7 +88,18 @@ public class WeekPortListFragment extends BaseFragment {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        mWeekPortListAdapter = new WeekPortListAdapter(null);
+
+        mChoiseDate = DateTime.now(TimeZone.getDefault());
+        int weekIndex = mChoiseDate.getWeekIndex();
+        try {
+            mWeeklyRoot = getBaseActivity().getDbUtils().findFirst(Selector.from(WeeklyRoot.class)
+                    .where("reportWeek", "=", String.valueOf(weekIndex)));
+
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
+        mWeekPortListAdapter = new WeekPortListAdapter(getActivity(), mWeeklyRoot);
         recyclerView.setAdapter(mWeekPortListAdapter);
 
     }

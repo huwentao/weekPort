@@ -1,73 +1,84 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="@dimen/dimen_padding"
-              tools:context="com.example.mokey.weekport.ui.fragment.PersonFragment">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen_padding"
+    app:elevation="@dimen/dimen_elevation"
+    tools:context="com.example.mokey.weekport.ui.fragment.PersonFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:padding="@dimen/dimen_padding"
-        android:text="@string/person_title"
-        android:textSize="@dimen/demen_textsize_large"
-        android:textStyle="italic|bold"
-        android:typeface="monospace"/>
+        >
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:colorControlActivated="@color/colorPrimary"
-        app:errorEnabled="false"
-        app:theme="@style/TextInputLayoutStyle">
-
-        <EditText
-            android:id="@+id/userName"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/userName"
-            android:paddingBottom="@dimen/dimen_text_padding"
-            android:singleLine="true">
+            android:gravity="center"
+            android:padding="@dimen/dimen_padding"
+            android:text="@string/person_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/demen_textsize_large"
+            android:textStyle="italic|bold"
+            android:typeface="monospace"/>
 
-            <requestFocus/>
-        </EditText>
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:colorControlActivated="@color/colorPrimary"
-        app:errorEnabled="false"
-        app:theme="@style/TextInputLayoutStyle">
-
-        <EditText
-            android:id="@+id/IDNum"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/IDNum"
-            android:paddingBottom="@dimen/dimen_text_padding"
-            android:singleLine="true"/>
-    </android.support.design.widget.TextInputLayout>
+            app:colorControlActivated="@color/colorPrimary"
+            app:errorEnabled="false"
+            app:theme="@style/TextInputLayoutStyle">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:colorControlActivated="@color/colorPrimary"
-        app:errorEnabled="false"
-        app:theme="@style/TextInputLayoutStyle">
+            <EditText
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/userName"
+                android:paddingBottom="@dimen/dimen_text_padding"
+                android:singleLine="true">
 
-        <EditText
-            android:id="@+id/filePath"
+                <requestFocus/>
+            </EditText>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/filePath"
-            android:lines="2"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:paddingBottom="@dimen/dimen_text_padding"/>
-    </android.support.design.widget.TextInputLayout>
-</LinearLayout>
+            app:colorControlActivated="@color/colorPrimary"
+            app:errorEnabled="false"
+            app:theme="@style/TextInputLayoutStyle">
 
+            <EditText
+                android:id="@+id/IDNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/IDNum"
+                android:paddingBottom="@dimen/dimen_text_padding"
+                android:singleLine="true"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:colorControlActivated="@color/colorPrimary"
+            app:errorEnabled="false"
+            app:theme="@style/TextInputLayoutStyle">
+
+            <EditText
+                android:id="@+id/filePath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:hint="@string/filePath"
+                android:lines="2"
+                android:maxLines="2"
+                android:paddingBottom="@dimen/dimen_text_padding"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
